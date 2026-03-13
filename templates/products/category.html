@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load product_filters %}
+
+{% block title %}{{ category.name }} - {{ site_name }}{% endblock %}
+{% block description %}{{ category.meta_description|default:category.description|truncatewords:20 }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+<link rel="stylesheet" href="{% static 'css/categories-visual.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="catalog-container">
+    <header class="catalog-header">
+        <h1 class="catalog-title">
+            {% if category.icon %}<span class="category-icon">{{ category.icon }}</span>{% endif %}
+            {{ category.name }}
+        </h1>
+        {% if category.description %}
+            <p class="catalog-subtitle">{{ category.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="catalog-layout catalog-layout--full">
+        <main class="catalog-main">
+            {% if subcategories and not filter_subcategories %}
+            <div class="subcategories-grid">
+                {% for subcat in subcategories %}
+                <a href="{{ subcat.get_absolute_url }}" class="subcategory-card">
+                    {% if subcat.icon %}<span class="subcategory-icon">{{ subcat.icon }}</span>{% endif %}
+                    <span class="subcategory-name">{{ subcat.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="get" action="" id="filtersForm" class="filters-form">
+            <div class="filters-bar">
+                <div class="filters-controls">
+                    <button type="button" class="filters-toggle" id="filtersToggle">
+                        <svg class="filters-toggle__icon" viewBox="0 0 24 24" fill="none">
+                            <path d="M3 4H21V6H3V4ZM6 10H18V12H6V10ZM9 16H15V18H9V16Z" fill="currentColor"/>
+                        </svg>
+                        <span class="filters-toggle__text">Фільтри</span>
+                        {% if filter_brands or filter_in_stock or filter_price_min or filter_price_max or filter_subcategories or filter_attrs %}
+                        <span class="filters-toggle__badge" id="filtersBadge"></span>
+                        {% endif %}
+                        <svg class="filters-toggle__arrow" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 10L12 15L17 10H7Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+
+                    <div class="desktop-sort-control">
+                        <button type="button" class="desktop-sort-btn" id="desktopSortBtn">
+                            <svg class="sort-icon" viewBox="0 0 24 24" fill="none">
+                                <path d="M3 6h18M3 12h13M3 18h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span class="sort-text">
+                                {% if current_sort == 'price_asc' %}Дешевші спочатку
+                                {% elif current_sort == 'price_desc' %}Дорожчі спочатку
+                                {% elif current_sort == 'name_asc' %}За назвою
+                                {% elif current_sort == 'popular' %}За популярністю
+                                {% elif current_sort == 'new' %}За новизною
+                                {% else %}Сортувати{% endif %}
+                            </span>
+                            <svg class="sort-arrow" viewBox="0 0 24 24" fill="none">
+                                <path d="M7 10L12 15L17 10H7Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <div class="desktop-sort-dropdown hidden" id="desktopSortDropdown">
+                            <div class="sort-option{% if current_sort == 'default' %} active{% endif %}" data-value="default">За замовчуванням</div>
+                            <div class="sort-option{% if current_sort == 'price_asc' %} active{% endif %}" data-value="price_asc">За ціною: дешевші спочатку</div>
+                            <div class="sort-option{% if current_sort == 'price_desc' %} active{% endif %}" data-value="price_desc">За ціною: дорожчі спочатку</div>
+                            <div class="sort-option{% if current_sort == 'name_asc' %} active{% endif %}" data-value="name_asc">За назвою</div>
+                            <div class="sort-option{% if current_sort == 'popular' %} active{% endif %}" data-value="popular">За популярністю</div>
+                            <div class="sort-option{% if current_sort == 'new' %} active{% endif %}" data-value="new">За новизною</div>
+                        </div>
+                    </div>
+
+                    <span class="results-count" id="resultsCount">
+                        {{ paginator.count }} товар{{ paginator.count|pluralize:"ів,и,ів" }}
+                    </span>
+                </div>
+
+                <input type="hidden" name="sort" id="sortInput" value="{{ current_sort }}">
+
+                <div class="filters-content" id="filtersContent">
+                    <div class="filters-grid">
+
+                        {% if available_subcategories %}
+                        <div class="filter-group">
+                            <label class="filter-label">Підкатегорія</label>
+                            <div class="filter-checkboxes filter-checkboxes--scrollable">
+                                {% for subcat in available_subcategories %}
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" value="{{ subcat.slug }}" name="subcategory"
+                                           class="filter-checkbox-input"
+                                           {% if subcat.slug in filter_subcategories %}checked{% endif %}>
+                                    <span>{{ subcat.name }}</span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="filter-group">
+                            <label class="filter-label">Ціна, ₴</label>
+                            <div class="price-inputs">
+                                <input type="number" class="price-input" id="priceMin" name="price_min"
+                                       placeholder="Від {{ cat_min_price|default:0 }}" min="0"
+                                       value="{% if filter_price_min %}{{ filter_price_min }}{% endif %}">
+                                <span>—</span>
+                                <input type="number" class="price-input" id="priceMax" name="price_max"
+                                       placeholder="До {{ cat_max_price|default:10000 }}" min="0"
+                                       value="{% if filter_price_max %}{{ filter_price_max }}{% endif %}">
+                            </div>
+                        </div>
+
+                        {% if available_brands %}
+                        <div class="filter-group">
+                            <label class="filter-label">Бренд</label>
+                            <div class="filter-checkboxes filter-checkboxes--scrollable">
+                                {% for brand_name in available_brands %}
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" value="{{ brand_name }}" name="brand"
+                                           class="filter-checkbox-input"
+                                           {% if brand_name in filter_brands %}checked{% endif %}>
+                                    <span>{{ brand_name }}</span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="filter-group">
+                            <label class="filter-label">Наявність</label>
+                            <div class="filter-checkboxes">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" value="1" name="in_stock"
+                                           class="filter-checkbox-input"
+                                           {% if filter_in_stock %}checked{% endif %}>
+                                    <span>Тільки в наявності</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        {% for attr_name, attr_values in available_attributes.items %}
+                        <div class="filter-group">
+                            <label class="filter-label">{{ attr_name }}</label>
+                            <div class="filter-checkboxes filter-checkboxes--scrollable">
+                                {% for val in attr_values %}
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" value="{{ val }}" name="attr_{{ attr_name }}"
+                                           class="filter-checkbox-input">
+                                    <span>{{ val }}</span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="filter-group filter-group--actions">
+                            <button type="button" class="filters-clear-btn" id="clearAllFilters">Очистити</button>
+                            <button type="submit" class="filters-apply-btn" id="applyFiltersBtn">Застосувати</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mobile-controls">
+                <button type="button" class="mobile-filters-btn" id="mobileFiltersBtn">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 4H21V6H3V4ZM6 10H18V12H6V10ZM9 16H15V18H9V16Z" fill="currentColor"/>
+                    </svg>
+                    <span>Фільтри</span>
+                </button>
+
+                <div class="sort-control">
+                    <button type="button" class="sort-select-btn" id="sortSelectBtn">
+                        <span class="sort-select-text">
+                            {% if current_sort == 'price_asc' %}Дешевші
+                            {% elif current_sort == 'price_desc' %}Дорожчі
+                            {% elif current_sort == 'name_asc' %}За назвою
+                            {% elif current_sort == 'popular' %}Популярні
+                            {% elif current_sort == 'new' %}Новинки
+                            {% else %}Сортувати{% endif %}
+                        </span>
+                        <svg class="sort-select-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 10L12 15L17 10H7Z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                    <div class="sort-dropdown hidden" id="sortDropdown">
+                        <div class="sort-option{% if current_sort == 'default' %} active{% endif %}" data-value="default">За замовчуванням</div>
+                        <div class="sort-option{% if current_sort == 'price_asc' %} active{% endif %}" data-value="price_asc">Дешевші спочатку</div>
+                        <div class="sort-option{% if current_sort == 'price_desc' %} active{% endif %}" data-value="price_desc">Дорожчі спочатку</div>
+                        <div class="sort-option{% if current_sort == 'name_asc' %} active{% endif %}" data-value="name_asc">За назвою</div>
+                        <div class="sort-option{% if current_sort == 'popular' %} active{% endif %}" data-value="popular">Популярні</div>
+                        <div class="sort-option{% if current_sort == 'new' %} active{% endif %}" data-value="new">Новинки</div>
+                    </div>
+                </div>
+            </div>
+            </form>
+
+            <div class="active-filters" id="activeFilters">
+                {% if filter_brands or filter_in_stock or filter_price_min or filter_price_max or filter_subcategories %}
+                <div class="active-filters__list">
+                    {% for b in filter_brands %}
+                    <span class="filter-chip" data-filter="brand" data-value="{{ b }}">
+                        {{ b }} <button type="button" class="filter-chip__remove" aria-label="Видалити фільтр">✕</button>
+                    </span>
+                    {% endfor %}
+                    {% if filter_in_stock %}
+                    <span class="filter-chip" data-filter="in_stock" data-value="1">
+                        В наявності <button type="button" class="filter-chip__remove" aria-label="Видалити фільтр">✕</button>
+                    </span>
+                    {% endif %}
+                    {% if filter_price_min or filter_price_max %}
+                    <span class="filter-chip" data-filter="price">
+                        Ціна: {{ filter_price_min|default:"0" }} — {{ filter_price_max|default:"∞" }} ₴
+                        <button type="button" class="filter-chip__remove" aria-label="Видалити фільтр">✕</button>
+                    </span>
+                    {% endif %}
+                    {% for slug in filter_subcategories %}
+                    <span class="filter-chip" data-filter="subcategory" data-value="{{ slug }}">
+                        {{ slug }} <button type="button" class="filter-chip__remove" aria-label="Видалити фільтр">✕</button>
+                    </span>
+                    {% endfor %}
+                    <button type="button" class="active-filters__clear" id="clearActiveFilters">Очистити всі</button>
+                </div>
+                {% endif %}
+            </div>
+
+        {% if products %}
+            <div class="products-grid" id="productsGrid" role="main" aria-live="polite">
+                {% for product in products %}
+                    {% include 'includes/product_card.html' with product=product %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state" role="status" aria-live="polite">
+                <div class="empty-state__icon" aria-hidden="true">🛍️</div>
+                <h2 class="empty-state__title">Товарів не знайдено</h2>
+                <p class="empty-state__description">
+                    Спробуйте змінити фільтри або переглянути інші категорії
+                </p>
+                <div class="empty-state__actions">
+                    <a href="/" class="empty-state__button empty-state__button--primary">
+                        ← На головну
+                    </a>
+                    <a href="{{ category.get_absolute_url }}" class="empty-state__button empty-state__button--secondary">
+                        Скинути фільтри
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="products-grid hidden" id="skeletonGrid" aria-hidden="true">
+            {% for i in "123456789012" %}
+                <div class="product-card-skeleton">
+                    <div class="product-card-skeleton__media skeleton"></div>
+                    <div class="product-card-skeleton__content">
+                        <div class="product-card-skeleton__name skeleton"></div>
+                        <div class="product-card-skeleton__price skeleton"></div>
+                        <div class="product-card-skeleton__button skeleton"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+            <nav class="pagination" role="navigation" aria-label="Навігація по сторінках">
+                {% if page_obj.has_previous %}
+                    <a href="?{% if filter_querystring %}{{ filter_querystring }}&{% endif %}page=1" class="pagination__link" aria-label="Перша сторінка">⟨⟨</a>
+                    <a href="?{% if filter_querystring %}{{ filter_querystring }}&{% endif %}page={{ page_obj.previous_page_number }}" class="pagination__link" aria-label="Попередня сторінка">⟨</a>
+                {% else %}
+                    <span class="pagination__link pagination__link--disabled" aria-disabled="true">⟨⟨</span>
+                    <span class="pagination__link pagination__link--disabled" aria-disabled="true">⟨</span>
+                {% endif %}
+
+                <span class="pagination__info" aria-live="polite">
+                    Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?{% if filter_querystring %}{{ filter_querystring }}&{% endif %}page={{ page_obj.next_page_number }}" class="pagination__link" aria-label="Наступна сторінка">⟩</a>
+                    <a href="?{% if filter_querystring %}{{ filter_querystring }}&{% endif %}page={{ page_obj.paginator.num_pages }}" class="pagination__link" aria-label="Остання сторінка">⟩⟩</a>
+                {% else %}
+                    <span class="pagination__link pagination__link--disabled" aria-disabled="true">⟩</span>
+                    <span class="pagination__link pagination__link--disabled" aria-disabled="true">⟩⟩</span>
+                {% endif %}
+            </nav>
+
+            <div class="pagination-mobile hidden">
+                {% if page_obj.has_next %}
+                    <a href="?{% if filter_querystring %}{{ filter_querystring }}&{% endif %}page={{ page_obj.next_page_number }}" class="pagination__load-more">
+                        Показати ще товари
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+        </main>
+    </div>
+</div>
+
+<div class="mobile-filters-modal" id="mobileFiltersModal">
+    <div class="modal-filters__content">
+        <div class="modal-filters__header">
+            <h3 class="modal-filters__title">Фільтри</h3>
+            <button type="button" class="modal-filters__close" aria-label="Закрити">✕</button>
+        </div>
+        <div class="modal-filters__body"></div>
+        <div class="modal-filters__footer">
+            <button type="button" class="modal-filters__clear">Очистити</button>
+            <button type="button" class="modal-filters__apply">Застосувати</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/catalog.js' %}"></script>
+{% endblock %}

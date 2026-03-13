@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load product_filters %}
+
+{% block title %}Акції - {{ site_name }}{% endblock %}
+{% block description %}Акційні товари зі знижками в магазині {{ site_name }}.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="products-section section-padding">
+    <div class="container">
+        {% if products %}
+            <!-- Filters -->
+            <div class="filters-section mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="results-count">
+                            Знайдено <strong>{{ total_products }}</strong> акційних товарів
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="sort-control">
+                            <button type="button" class="sort-select-btn" id="sortSelectBtn">
+                                <span class="sort-select-text">Сортувати</span>
+                                <svg class="sort-select-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 10L12 15L17 10H7Z" fill="currentColor"/>
+                                </svg>
+                            </button>
+                            <div class="sort-dropdown hidden" id="sortDropdown">
+                                <div class="sort-option" data-value="default">За замовчуванням</div>
+                                <div class="sort-option" data-value="price_low">За ціною: дешевші спочатку</div>
+                                <div class="sort-option" data-value="price_high">За ціною: дорожчі спочатку</div>
+                                <div class="sort-option" data-value="name">За назвою</div>
+                                <div class="sort-option" data-value="discount">За розміром знижки</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                {% for product in products %}
+                    {% include 'includes/product_card.html' with product=product %}
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <nav class="pagination" role="navigation" aria-label="Навігація по сторінках">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1" class="pagination__link" aria-label="Перша сторінка">⟨⟨</a>
+                        <a href="?page={{ page_obj.previous_page_number }}" class="pagination__link" aria-label="Попередня сторінка">⟨</a>
+                    {% else %}
+                        <span class="pagination__link pagination__link--disabled" aria-disabled="true">⟨⟨</span>
+                        <span class="pagination__link pagination__link--disabled" aria-disabled="true">⟨</span>
+                    {% endif %}
+                    
+                    <span class="pagination__info" aria-live="polite">
+                        Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
+                    </span>
+                    
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="pagination__link" aria-label="Наступна сторінка">⟩</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination__link" aria-label="Остання сторінка">⟩⟩</a>
+                    {% else %}
+                        <span class="pagination__link pagination__link--disabled" aria-disabled="true">⟩</span>
+                        <span class="pagination__link pagination__link--disabled" aria-disabled="true">⟩⟩</span>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        {% else %}
+            <!-- Empty State -->
+            <div class="empty-state text-center">
+                <div class="empty-state-icon">
+                    <i class="icon-sale" aria-hidden="true">🏷️</i>
+                </div>
+                <h3 class="empty-state-title">Поки що немає акційних товарів</h3>
+                <p class="empty-state-text">
+                    Слідкуйте за нашими оновленнями, щоб не пропустити вигідні пропозиції!
+                </p>
+                <a href="/" class="btn btn-primary btn-lg">
+                    На головну
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- catalog_new.js видалено - файл не існує -->
+{% endblock %}

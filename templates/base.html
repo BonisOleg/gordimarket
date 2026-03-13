@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="uk" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- SEO Meta Tags -->
+    <title>{% block title %}{{ site_name }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ site_description }}{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}{{ site_keywords }}{% endblock %}">
+    <meta name="author" content="{{ site_name }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}{{ block.super }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ block.super }}{% endblock %}">
+    {% load static %}
+    <meta property="og:image" content="{% block og_image %}{% if site_settings_obj and site_settings_obj.og_image %}{{ request.scheme }}://{{ request.get_host }}{{ site_settings_obj.og_image.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og_default.png' %}{% endif %}{% endblock %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta property="twitter:title" content="{% block twitter_title %}{{ block.super }}{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}{{ block.super }}{% endblock %}">
+    <meta property="twitter:image" content="{% block twitter_image %}{{ block.super }}{% endblock %}">
+
+    <!-- Favicon -->
+    {% if site_settings_obj and site_settings_obj.favicon %}
+    <link rel="icon" type="image/png" href="{{ site_settings_obj.favicon.url }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ site_settings_obj.favicon.url }}">
+    {% else %}
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='8' fill='%231a1a1a'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='28' fill='white'>G</text></svg>">
+    {% endif %}
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <!-- Hidden CSRF for iOS Safari - ensures cookie is generated -->
+    <div class="visually-hidden">{% csrf_token %}</div>
+
+    <!-- iOS Safari specific -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
+
+    <!-- Android Chrome / PWA theme color -->
+    <meta name="theme-color" content="{{ site_theme_color }}">
+    <meta name="msapplication-TileColor" content="{{ site_theme_color }}">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap"></noscript>
+
+    <!-- CSS - Optimized with Design System -->
+    {% load core_tags %}
+    <!-- 1. Design System Variables (завжди першим) -->
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+
+    <!-- 2. Core Styles (базові стилі, reset, типографіка) -->
+    <link rel="stylesheet" href="{% static 'css/base.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom-fonts.css' %}">
+
+    <!-- 3. Layout System (сітка, container) -->
+    <link rel="stylesheet" href="{% static 'css/layout.min.css' %}">
+
+    <!-- 4. Global Components (header, footer, navigation, cards) -->
+    <link rel="stylesheet" href="{% static 'css/gordi-header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product-cards.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icons-badges.css' %}">
+    <link rel="stylesheet" href="{% static 'css/badges.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer-desktop.css' %}">
+
+    <!-- 5. Common Sections (використовуються на багатьох сторінках) -->
+    <link rel="stylesheet" href="{% static 'css/categories.css' %}">
+    <link rel="stylesheet" href="{% static 'css/promo-images.css' %}">
+    <link rel="stylesheet" href="{% static 'css/brands-section.css' %}">
+    <link rel="stylesheet" href="{% static 'css/reviews-section.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar-menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home-catalog-layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sliders.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/promotions-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'css/delivery.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pricing.css' %}">
+
+    <!-- 6. Mobile Styles - UNIFIED -->
+    <link rel="stylesheet" href="{% static 'css/mobile-responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mobile-catalog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ios-safari.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mobile-search.css' %}">
+
+    <!-- 7. Utilities & Effects -->
+    <link rel="stylesheet" href="{% static 'css/wishlist.css' %}">
+    {% if site_age_verification %}
+    <link rel="stylesheet" href="{% static 'css/age-verification.css' %}">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/sale-countdown.css' %}">
+    <link rel="stylesheet" href="{% static 'css/toast.css' %}">
+
+    <!-- 8. Page-Specific Styles (завантажуються через extra_css блок) -->
+    {% block extra_css %}{% endblock %}
+
+    <!-- Structured Data -->
+    {% block structured_data %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "{{ site_name }}",
+        "url": "{{ request.scheme }}://{{ request.get_host }}",
+        {% if site_settings_obj and site_settings_obj.logo %}
+        "logo": "{{ request.scheme }}://{{ request.get_host }}{{ site_settings_obj.logo.url }}",
+        {% else %}
+        "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/logo.png' %}",
+        {% endif %}
+        "description": "{{ site_description }}",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "{{ site_phone }}",
+            "contactType": "Customer Service",
+            "availableLanguage": "Ukrainian"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "UA"
+        }
+    }
+    </script>
+    {% endblock %}
+
+    <!-- Global Site Settings (GTM, FB Pixel, GA) -->
+    {% get_site_settings as site_settings %}
+    {% if site_settings %}
+        {% if site_settings.gtm_code %}{{ site_settings.gtm_code|safe }}{% endif %}
+        {% if site_settings.fb_pixel_code %}{{ site_settings.fb_pixel_code|safe }}{% endif %}
+        {% if site_settings.ga_code %}{{ site_settings.ga_code|safe }}{% endif %}
+        {% if site_settings.custom_head_code %}{{ site_settings.custom_head_code|safe }}{% endif %}
+    {% endif %}
+
+    <!-- Tracking Pixels (Head Section) -->
+    {% get_tracking_pixels as all_pixels %}
+    {% for pixel in all_pixels %}
+        {% if pixel.placement == 'head' %}
+            {{ pixel.code_snippet|safe }}
+        {% endif %}
+    {% endfor %}
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+</head>
+<body class="{% block body_class %}{% endblock %}"
+      data-site-name="{{ site_name }}"
+      data-phone-raw="{{ site_phone_raw }}"
+      data-search-placeholder="{{ site_search_placeholder }}"
+      {% if site_age_verification %}
+      data-age-verification="true"
+      {% if site_settings_obj and site_settings_obj.logo %}data-logo-url="{{ site_settings_obj.logo.url }}"{% else %}data-logo-url="{% static 'images/logo.png' %}"{% endif %}
+      {% if site_settings_obj and site_settings_obj.age_verification_text %}data-age-verification-text="{{ site_settings_obj.age_verification_text|escapejs }}"{% endif %}
+      {% endif %}>
+
+    <!-- Global Site Settings (Body Start) -->
+    {% if site_settings and site_settings.custom_body_start_code %}
+        {{ site_settings.custom_body_start_code|safe }}
+    {% endif %}
+
+    <!-- Tracking Pixels (Body Start) -->
+    {% for pixel in all_pixels %}
+        {% if pixel.placement == 'body_start' %}
+            {{ pixel.code_snippet|safe }}
+        {% endif %}
+    {% endfor %}
+
+    <!-- Skip link для accessibility -->
+    <a href="#main-content" class="skip-link">Перейти до основного вмісту</a>
+
+    <!-- Header -->
+    <header class="site-header-wrapper" role="banner">
+        {% include 'includes/header.html' %}
+    </header>
+
+    <!-- Mobile Catalog -->
+    <div class="mobile-catalog" id="mobile-catalog" role="navigation" aria-label="Мобільний каталог">
+        {% include 'includes/mobile-catalog.html' %}
+    </div>
+    <div class="mobile-catalog-overlay" id="mobile-catalog-overlay"></div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content" role="main">
+        {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} fade-in" role="alert">
+                        {{ message }}
+                        <button type="button" class="alert-close" aria-label="Закрити повідомлення">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        {% include 'includes/footer.html' %}
+        {% include 'includes/mobile-footer.html' %}
+    </footer>
+
+    <!-- Mobile Bottom Navigation -->
+    {% include 'includes/mobile-bottom-nav.html' %}
+
+    <!-- JavaScript - UNIFIED & OPTIMIZED -->
+    <!-- Core Scripts -->
+    {% if site_age_verification %}
+    <script src="{% static 'js/age-verification.js' %}"></script>
+    {% endif %}
+    <script src="{% static 'js/utils.min.js' %}" defer></script>
+    <script src="{% static 'js/main.min.js' %}" defer></script>
+
+    <!-- Toast notifications -->
+    <script src="{% static 'js/toast.js' %}"></script>
+
+    <!-- Unified Modules -->
+    <script src="{% static 'js/unified-search.js' %}" defer></script>
+    <script src="{% static 'js/unified-cart-badge.js' %}" defer></script>
+    <script src="{% static 'js/unified-slider.js' %}" defer></script>
+
+    <!-- Feature Modules -->
+    <script src="{% static 'js/catalog-dropdown.js' %}" defer></script>
+    <script src="{% static 'js/common-handlers.js' %}" defer></script>
+    <script src="{% static 'js/cart-handler.js' %}" defer></script>
+    <script src="{% static 'js/mobile-catalog.js' %}" defer></script>
+    <script src="{% static 'js/sidebar-menu.js' %}" defer></script>
+    <script src="{% static 'js/wishlist.js' %}" defer></script>
+    <script src="{% static 'js/footer-subscribe.js' %}" defer></script>
+    <script src="{% static 'js/sale-countdown.js' %}" defer></script>
+    {% block extra_js %}{% endblock %}
+
+    <!-- Global Site Settings (Body End) -->
+    {% if site_settings and site_settings.custom_body_end_code %}
+        {{ site_settings.custom_body_end_code|safe }}
+    {% endif %}
+
+    <!-- Tracking Pixels (Body End) -->
+    {% for pixel in all_pixels %}
+        {% if pixel.placement == 'body_end' %}
+            {{ pixel.code_snippet|safe }}
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

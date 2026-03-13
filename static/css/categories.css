@@ -1,0 +1,260 @@
+/* Стилі для категорій товарів - КВАДРАТНІ КАРТКИ З КАРТИНКОЮ */
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 var(--spacing-md);
+}
+
+.category-card {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    aspect-ratio: 1;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.category-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.category-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-image img {
+    transform: scale(1.05);
+}
+
+.category-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-name {
+    font-size: 1em;
+    font-weight: 600;
+    margin: 0;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    line-height: 1.2;
+    width: 100%;
+}
+
+.category-card:hover .category-name {
+    color: #ffd700;
+}
+
+/* Виділення для акційних товарів */
+.category-featured {
+    border: 3px solid #ff9800;
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+    animation: featuredPulse 2s ease-in-out infinite;
+}
+
+.category-featured .category-content {
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+    bottom: 0;
+    top: auto;
+    padding: 15px;
+}
+
+.category-featured .category-name {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.category-featured:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(255, 152, 0, 0.6);
+}
+
+.category-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.95);
+    color: #ee5a52;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    animation: badgeBounce 1.5s ease-in-out infinite;
+    z-index: 2;
+}
+
+
+/* Анімації */
+@keyframes featuredPulse {
+    0%, 100% {
+        box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 8px 25px rgba(255, 152, 0, 0.6);
+    }
+}
+
+@keyframes badgeBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+
+/* Адаптивність */
+@media (max-width: 992px) {
+    .categories-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-top: 25px;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .category-card {
+        aspect-ratio: 1;
+        min-height: 140px;
+    }
+    
+    .category-content {
+        padding: 14px;
+    }
+    
+    .category-name {
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 20px;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .category-card {
+        aspect-ratio: 1;
+        min-height: 120px;
+    }
+    
+    .category-content {
+        padding: 12px;
+    }
+    
+    .category-name {
+        font-size: 0.9em;
+        line-height: 1.3;
+    }
+    
+    .category-badge {
+        top: 8px;
+        right: 8px;
+        padding: 3px 6px;
+        font-size: 0.65em;
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 15px;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .category-card {
+        aspect-ratio: 1;
+        min-height: 140px;
+    }
+    
+    .category-content {
+        padding: 10px;
+    }
+    
+    .category-name {
+        font-size: 0.85em;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 360px) {
+    .categories-grid {
+        gap: 10px;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .category-card {
+        min-height: 120px;
+    }
+    
+    .category-content {
+        padding: 8px;
+    }
+    
+    .category-name {
+        font-size: 0.8em;
+        line-height: 1.3;
+    }
+}
+
+/* Спеціальні стилі для iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .category-card {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .category-card:hover {
+        -webkit-transform: translateY(-5px) translateZ(0);
+        transform: translateY(-5px) translateZ(0);
+    }
+    
+    .category-featured:hover {
+        -webkit-transform: translateY(-8px) translateZ(0);
+        transform: translateY(-8px) translateZ(0);
+    }
+}

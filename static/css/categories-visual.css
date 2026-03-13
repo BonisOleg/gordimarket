@@ -1,0 +1,32 @@
+/* Стилі категорій — GORDI market */
+
+.category-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.category-badge {
+    display: inline-flex;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 6px;
+    background: #1a1a1a;
+    color: #fff;
+}
+
+/* Адаптив */
+@media (max-width: 767px) {
+    .category-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 14px;
+    }
+}

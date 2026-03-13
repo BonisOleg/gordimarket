@@ -1,0 +1,118 @@
+{% extends "admin/change_list.html" %}
+
+{% block result_list %}
+<style>
+    .admin-stats-grid {
+        display: grid;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .admin-stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .admin-stats-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .admin-stats-card-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+    }
+    
+    .admin-stats-card-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #333;
+    }
+    
+    .admin-stats-section-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+        padding-left: 4px;
+    }
+    
+    .admin-stats-card-value.pending {
+        color: #ff9800;
+    }
+    
+    .admin-stats-card-value.confirmed {
+        color: #2196f3;
+    }
+    
+    .admin-stats-card-value.completed {
+        color: #4caf50;
+    }
+    
+    .admin-stats-card-value.cancelled {
+        color: #f44336;
+    }
+    
+    @media (max-width: 1200px) {
+        .admin-stats-row {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .admin-stats-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+{% if summary %}
+<div class="admin-stats-grid">
+    <!-- Рядок 1: Статистика по статусах -->
+    <div class="admin-stats-row">
+        <div class="admin-stats-card">
+            <div class="admin-stats-card-label">Очікують підтвердження</div>
+            <div class="admin-stats-card-value pending">{{ summary.status_stats.pending }}</div>
+        </div>
+        <div class="admin-stats-card">
+            <div class="admin-stats-card-label">Незавершені</div>
+            <div class="admin-stats-card-value confirmed">{{ summary.status_stats.in_progress }}</div>
+        </div>
+        <div class="admin-stats-card">
+            <div class="admin-stats-card-label">Завершені</div>
+            <div class="admin-stats-card-value completed">{{ summary.status_stats.completed }}</div>
+        </div>
+    </div>
+    
+    <!-- Рядок 2: Статистика за сьогодні -->
+    <div class="admin-stats-section-title">📅 Статистика за сьогодні ({{ summary.today_stats.date|date:"d.m.Y" }})</div>
+    <div class="admin-stats-row">
+        <div class="admin-stats-card">
+            <div class="admin-stats-card-label">🆕 Нових замовлень</div>
+            <div class="admin-stats-card-value pending">{{ summary.today_stats.new_orders }}</div>
+        </div>
+        <div class="admin-stats-card">
+            <div class="admin-stats-card-label">💰 Сума</div>
+            <div class="admin-stats-card-value">{{ summary.today_stats.sum|floatformat:2 }} ₴</div>
+        </div>
+        <div class="admin-stats-card">
+            <div class="admin-stats-card-label">❌ Скасовано</div>
+            <div class="admin-stats-card-value cancelled">{{ summary.today_stats.cancelled }}</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{{ block.super }}
+{% endblock %}
+

@@ -1,0 +1,304 @@
+/* ============================================ */
+/*         ІКОНКИ ТА БЕЙДЖІ - СТАНДАРТИ        */
+/*      Єдиний підхід для всього проєкту      */
+/* ============================================ */
+
+/* ========== ІКОНКИ ========== */
+
+/* Base icon class */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Icon sizes */
+.icon-xs { width: 16px; height: 16px; }
+.icon-sm { width: 20px; height: 20px; }
+.icon-md { width: 24px; height: 24px; }
+.icon-lg { width: 32px; height: 32px; }
+.icon-xl { width: 48px; height: 48px; }
+
+/* SVG icons default styling */
+.icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Icon в кнопках */
+.btn .icon {
+  margin-right: var(--spacing-xs);
+}
+
+.btn .icon-only {
+  margin: 0;
+}
+
+/* ========== БЕЙДЖІ ========== */
+
+/* Universal badge base */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Badge sizes */
+.badge-sm {
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+.badge-lg {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* Badge colors - semantic */
+.badge-primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.badge-secondary {
+  background: var(--color-secondary);
+  color: var(--color-neutral-dark);
+}
+
+.badge-success {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.badge-warning {
+  background: var(--color-warning);
+  color: var(--color-neutral-dark);
+}
+
+.badge-danger {
+  background: var(--color-danger);
+  color: var(--color-white);
+}
+
+.badge-info {
+  background: var(--color-info);
+  color: var(--color-white);
+}
+
+/* Badge variants - outline */
+.badge-outline {
+  background: transparent;
+  border: 2px solid currentColor;
+}
+
+.badge-outline.badge-primary {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ========== PRODUCT BADGES (на картках) ========== */
+
+/* Container для бейджів на product card */
+.product-badges,
+.product-card__badges,
+.product-stickers {
+  position: absolute;
+  top: var(--badge-offset, 8px);
+  left: var(--badge-offset, 8px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  z-index: 15;
+}
+
+/* Product badge base */
+.product-badge,
+.product-sticker {
+  display: inline-block;
+  padding: var(--badge-padding, 4px 8px);
+  border-radius: var(--badge-radius, 16px);
+  font-size: var(--badge-font-size, 10px);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--color-white);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Product badge types */
+.product-badge--sale,
+.badge-sale,
+.sale-badge,
+.sticker-sale {
+  background: var(--badge-sale);
+  color: var(--color-white);
+}
+
+.product-badge--new,
+.badge-new,
+.new-badge,
+.sticker-new {
+  background: var(--badge-new);
+  color: var(--color-white);
+}
+
+.product-badge--top,
+.product-badge--hit,
+.badge-top,
+.badge-hit,
+.featured-badge,
+.sticker-top {
+  background: var(--badge-top);
+  color: var(--color-text-primary);
+}
+
+/* ========== NOTIFICATION BADGES ========== */
+
+/* Badge у навігації (cart/wishlist counts) */
+.nav-badge,
+.mobile-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  padding: 2px 6px;
+  border-radius: 50px;
+  min-width: 18px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Badge в user dropdown */
+.badge-small {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: var(--color-white);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Status badges (для замовлень) */
+.order-status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-confirmed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-processing {
+  background: #d1e7ff;
+  color: #004085;
+}
+
+.status-shipped {
+  background: #cfe2ff;
+  color: #084298;
+}
+
+.status-delivered,
+.status-completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* ========== HEART ICON (Wishlist) ========== */
+
+/* Універсальна іконка серця */
+.icon-heart,
+.product-card__wishlist-icon,
+.heart-icon {
+  font-size: 16px;
+  line-height: 1;
+  transition: transform var(--transition-fast);
+}
+
+/* Animation для wishlist */
+.animate-heart {
+  animation: heartBeat 0.6s ease;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.2); }
+  50% { transform: scale(0.95); }
+  75% { transform: scale(1.1); }
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 768px) {
+  .badge {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+  
+  .nav-badge,
+  .mobile-badge {
+    font-size: 10px;
+    min-width: 16px;
+    padding: 1px 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-badge,
+  .product-sticker {
+    padding: 2px 6px;
+    font-size: var(--badge-font-size, 8px);
+  }
+}
+
+/* ========== ACCESSIBILITY ========== */
+
+/* High contrast підтримка */
+@media (prefers-contrast: high) {
+  .badge,
+  .product-badge {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion підтримка */
+@media (prefers-reduced-motion: reduce) {
+  .animate-heart {
+    animation: none;
+  }
+  
+  .icon,
+  .badge {
+    transition: none;
+  }
+}
+

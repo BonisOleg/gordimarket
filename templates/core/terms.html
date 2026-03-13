@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Умови використання - {{ site_name }}{% endblock %}
+
+{% block body_class %}terms-page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/legal-pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="legal-section section-padding">
+    <div class="container">
+
+        <h1 class="section-title">Умови використання</h1>
+
+        <div class="legal-content">
+
+            <div class="info-block">
+                <h2>📋 Загальні положення</h2>
+                <p>Ці Умови користування (далі — «Умови») визначають правила використання інтернет-магазину {{ site_name }} (далі — «Сайт»).</p>
+                <p><strong>Використовуючи наш Сайт, ви автоматично погоджуєтеся з цими Умовами.</strong> Якщо ви не погоджуєтеся з будь-якою частиною цих Умов, будь ласка, покиньте цей Сайт.</p>
+            </div>
+
+            <div class="info-block">
+                <h2>🏢 Інформація про продавця</h2>
+                <ul class="info-list">
+                    <li><strong>Назва:</strong> {{ site_name }}</li>
+                    {% if site_phone %}<li><strong>Телефон:</strong> {{ site_phone }}</li>{% endif %}
+                    {% if site_email %}<li><strong>Email:</strong> {{ site_email }}</li>{% endif %}
+                    {% if site_working_hours %}<li><strong>Час роботи:</strong> {{ site_working_hours }}{% if site_day_off %}, {{ site_day_off }}{% endif %}</li>{% endif %}
+                </ul>
+            </div>
+
+            <div class="info-block">
+                <h2>🛒 Замовлення та оплата</h2>
+                <h3>Процедура оформлення замовлення:</h3>
+                <ol class="process-list">
+                    <li>Вибір товару та додавання до кошика</li>
+                    <li>Заповнення контактної інформації</li>
+                    <li>Вибір способу доставки та оплати</li>
+                    <li>Підтвердження замовлення</li>
+                </ol>
+                <p><strong>Важливо:</strong> Замовлення вважається підтвердженим після обробки нашим менеджером.</p>
+            </div>
+
+            <div class="info-block">
+                <h2>💰 Ціни та оплата</h2>
+                <ul class="conditions-list">
+                    <li><strong>Валюта:</strong> Всі ціни вказані в українських гривнях (грн)</li>
+                    <li><strong>Акційні ціни:</strong> Діють до закінчення акції або вичерпання товару</li>
+                    <li><strong>Зміна цін:</strong> Ми залишаємо за собою право змінювати ціни без попереднього повідомлення</li>
+                </ul>
+                <h3>Способи оплати:</h3>
+                <ul>
+                    <li>💳 <strong>Оплата карткою онлайн</strong></li>
+                    <li>💰 <strong>Готівка при отриманні</strong></li>
+                    <li>🏦 <strong>Банківський переказ</strong></li>
+                </ul>
+            </div>
+
+            <div class="info-block">
+                <h2>🚚 Доставка</h2>
+                <div class="delivery-grid">
+                    <div class="delivery-method">
+                        <h4>📦 Нова Пошта</h4>
+                        <p>Доставка у відділення або поштомат по всій Україні</p>
+                        <p><strong>Термін:</strong> 1-3 робочих дні</p>
+                    </div>
+                    <div class="delivery-method">
+                        <h4>📮 Укрпошта</h4>
+                        <p>Доставка у відділення Укрпошти</p>
+                        <p><strong>Термін:</strong> 3-7 робочих днів</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <h2>🔒 Безпека та конфіденційність</h2>
+                <ul>
+                    <li>🛡️ <strong>Захист персональних даних</strong> — ваша інформація під надійним захистом</li>
+                    <li>🔐 <strong>Безпечна передача платіжної інформації</strong> — SSL-шифрування</li>
+                    <li>📧 <strong>Відсутність спаму</strong> — ніяких непотрібних розсилок</li>
+                </ul>
+            </div>
+
+            <div class="info-block warning">
+                <h2>⚠️ Обмеження відповідальності</h2>
+                <ul>
+                    <li>Ми не несемо відповідальності за тимчасову недоступність сайту через технічні роботи</li>
+                    <li>Зображення товарів можуть відрізнятися від оригіналу</li>
+                    <li>Характеристики товарів можуть змінюватися виробником без попереднього повідомлення</li>
+                </ul>
+            </div>
+
+            <div class="info-block">
+                <h2>📝 Зміни умов</h2>
+                <p>Адміністрація сайту залишає за собою право вносити зміни до цих Умов у будь-який час. Зміни набувають чинності з моменту їх публікації на сайті.</p>
+            </div>
+
+            <div class="date-block">
+                <p><small>Остання редакція: {{ "now"|date:"Y" }} рік</small></p>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Обробка оплати - {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="payment-section section-padding">
+    <div class="container">
+        <div class="payment-wrapper text-center">
+            <h1>Обробка оплати</h1>
+            <div class="payment-loader my-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Завантаження...</span>
+                </div>
+            </div>
+            <p>Ваша оплата обробляється. Будь ласка, зачекайте...</p>
+            <p class="text-muted">Замовлення: <strong>{{ order.order_number }}</strong></p>
+            
+            <div class="mt-4">
+                <a href="{% url 'orders:payment_callback' order.id %}" class="btn btn-primary">Перевірити статус</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

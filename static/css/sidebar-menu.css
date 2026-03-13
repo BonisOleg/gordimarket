@@ -1,0 +1,144 @@
+.sidebar-menu {
+  width: 280px;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg, 12px);
+  padding: var(--spacing-md, 16px);
+  align-self: flex-start;
+}
+
+/* На десктопі - sidebar без додаткового позиціонування */
+/* Позиціонування контролюється батьківськими контейнерами */
+/* .home-catalog-sidebar та .catalog-sidebar мають position: sticky */
+
+/* Відступи для sidebar перенесені в батьківські контейнери */
+/* .home-catalog-sidebar та .catalog-sidebar управляють позиціонуванням */
+/* Scrollbar стилі також управляються батьківськими контейнерами */
+
+.sidebar-menu__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu__item {
+  position: relative;
+  margin-bottom: var(--spacing-xs, 8px);
+}
+
+.sidebar-menu__item[data-category-type="women"] {
+  border-top: 1px solid rgba(74, 144, 217, 0.2);
+  padding-top: var(--spacing-sm, 12px);
+  margin-top: var(--spacing-sm, 12px);
+}
+
+.sidebar-menu__item.has-children > .sidebar-menu__link {
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+.sidebar-menu__link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 12px);
+  padding: var(--spacing-sm, 12px) var(--spacing-md, 16px);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  border-radius: var(--radius-md, 8px);
+  transition: all var(--transition-fast, 0.2s);
+  font-size: var(--font-size-base, 16px);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sidebar-menu__link:hover {
+  background: rgba(74, 144, 217, 0.1);
+  color: var(--color-cta-primary);
+}
+
+.sidebar-menu__item.active > .sidebar-menu__link {
+  background: var(--color-brand-primary);
+  color: var(--color-text-white);
+  box-shadow: 0 2px 4px rgba(74, 144, 217, 0.2);
+}
+
+.sidebar-menu__text {
+  flex: 1;
+  font-weight: var(--font-weight-medium, 500);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.sidebar-menu__text:hover {
+  color: var(--color-cta-primary);
+}
+
+.sidebar-menu__arrow {
+  font-size: 18px;
+  color: var(--color-cta-primary);
+  transition: transform var(--transition-normal, 0.3s) ease;
+  transform-origin: center;
+  display: inline-block;
+  cursor: pointer;
+  padding: 4px;
+  margin: -4px;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sidebar-menu__item.menu-open .sidebar-menu__arrow {
+  transform: rotate(90deg);
+}
+
+.sidebar-menu__submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-normal, 0.3s) ease;
+  margin-top: 0;
+}
+
+.sidebar-menu__item.menu-open .sidebar-menu__submenu {
+  margin-top: var(--spacing-xs, 8px);
+}
+
+.submenu__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: var(--spacing-xl, 32px);
+}
+
+.submenu__link {
+  display: block;
+  padding: var(--spacing-sm, 12px) var(--spacing-md, 16px);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-sm, 14px);
+  border-radius: var(--radius-sm, 6px);
+  transition: all var(--transition-fast, 0.2s);
+}
+
+.submenu__link:hover {
+  background: var(--color-bg-primary);
+  color: var(--color-cta-primary);
+  padding-left: calc(var(--spacing-md) + 4px);
+}
+
+.submenu__item.active .submenu__link {
+  background: rgba(74, 144, 217, 0.15);
+  color: var(--color-brand-primary);
+  font-weight: var(--font-weight-semibold);
+  padding-left: calc(var(--spacing-md) + 4px);
+}
+
+/* Адаптація для планшетів та мобільних */
+@media (max-width: 991px) {
+  .sidebar-menu {
+    display: none;
+  }
+}
+

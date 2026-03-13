@@ -1,0 +1,42 @@
+# Core Django
+Django==4.2.24
+psycopg2-binary==2.9.9
+
+# Database for Render
+dj-database-url==2.1.0
+
+# Utilities
+python-decouple==3.8
+Pillow==11.3.0
+requests==2.32.5
+openpyxl==3.1.2
+
+# Static files  
+whitenoise==6.11.0
+
+# Production
+gunicorn==23.0.0
+
+# Django Extensions
+django-extensions==3.2.3
+django-ckeditor==6.7.3
+django-crispy-forms==2.4
+crispy-bootstrap5==2025.6
+django-robots==6.1
+
+# XML processing
+lxml==6.0.2
+
+# Cloudinary для зберігання media файлів на production
+cloudinary==1.36.0
+django-cloudinary-storage==0.3.0
+
+# Redis для кешування (опціонально)
+redis==5.0.1
+django-redis==5.4.0
+hiredis==3.0.0
+
+# Nova Post API v1.0 та Monobank Acquiring
+cachetools==5.3.2
+ecdsa==0.18.0
+cryptography==42.0.0

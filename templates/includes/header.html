@@ -1,0 +1,181 @@
+{% load static %}
+
+<div class="site-header">
+    <!-- Top bar: logo + icons -->
+    <div class="header-topbar">
+        <div class="container">
+            <div class="header-topbar__inner">
+                <!-- Logo -->
+                <a href="{% url 'core:home' %}" class="site-logo" aria-label="{{ site_name }} — Головна">
+                    <span class="site-logo__main">GORDI</span>
+                    <span class="site-logo__sub">market</span>
+                </a>
+
+                <!-- Right icons -->
+                <div class="header-topbar__actions">
+                    <!-- Search toggle (desktop inline, mobile icon) -->
+                    <button type="button" class="header-icon-btn" id="headerSearchToggle" aria-label="Пошук">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                    </button>
+
+                    <!-- Cart -->
+                    <a href="{% url 'cart:detail' %}" class="header-icon-btn" aria-label="Кошик">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 01-8 0"/>
+                        </svg>
+                        <span class="header-icon-btn__badge{% if cart_total_items == 0 %} hidden{% endif %}" id="cartBadgeTop">{{ cart_total_items|default:"0" }}</span>
+                    </a>
+
+                    <!-- Home -->
+                    <a href="{% url 'core:home' %}" class="header-icon-btn" aria-label="Головна">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </a>
+
+                    <!-- Wishlist -->
+                    <a href="{% url 'wishlist:list' %}" class="header-icon-btn" aria-label="Обране">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                        </svg>
+                        <span class="header-icon-btn__badge{% if wishlist_count == 0 %} hidden{% endif %}" id="wishlistBadgeTop">{{ wishlist_count|default:"0" }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation bar -->
+    <nav class="site-nav" aria-label="Головна навігація">
+        <div class="container">
+            <div class="site-nav__inner">
+
+                <!-- Catalog button with mega-dropdown -->
+                <div class="nav-catalog" id="navCatalog">
+                    <button type="button" class="nav-catalog__btn" id="catalogToggleBtn" aria-expanded="false" aria-haspopup="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <line x1="3" y1="18" x2="21" y2="18"/>
+                        </svg>
+                        Каталог
+                        <svg class="nav-catalog__arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+
+                    <!-- Mega dropdown -->
+                    <div class="catalog-dropdown" id="catalogDropdown" aria-hidden="true">
+                        <div class="catalog-dropdown__inner">
+                            <!-- Left: parent categories -->
+                            <ul class="catalog-dropdown__parents" role="list">
+                                {% for cat in main_categories %}
+                                <li class="catalog-dropdown__parent-item" data-cat-id="{{ cat.id }}">
+                                    <a href="{{ cat.get_absolute_url }}" class="catalog-dropdown__parent-link">
+                                        {% if cat.icon %}<span class="cat-icon">{{ cat.icon }}</span>{% endif %}
+                                        {{ cat.name }}
+                                        {% if cat.children.all %}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>{% endif %}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- Right: subcategories panel -->
+                            <div class="catalog-dropdown__subs" id="catalogSubs">
+                                {% for cat in main_categories %}
+                                {% if cat.children.all %}
+                                <div class="catalog-dropdown__sub-panel" data-parent-id="{{ cat.id }}" aria-hidden="true">
+                                    <ul class="catalog-dropdown__sub-list">
+                                        {% for child in cat.children.all %}
+                                        <li>
+                                            <a href="{{ child.get_absolute_url }}">
+                                                {% if child.icon %}<span>{{ child.icon }}</span>{% endif %}
+                                                {{ child.name }}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nav links -->
+                <div class="site-nav__links">
+                    <a href="{% url 'products:sale' %}" class="site-nav__link">Акції</a>
+                    <a href="{% url 'core:delivery' %}" class="site-nav__link">Доставка</a>
+                    <a href="{% url 'core:about' %}" class="site-nav__link">Про нас</a>
+                    <a href="{% url 'core:contacts' %}" class="site-nav__link">Контакти</a>
+                </div>
+
+                <!-- Search bar (expandable) -->
+                <div class="nav-search" id="navSearchContainer">
+                    <form action="{% url 'core:search' %}" method="get" class="nav-search__form" role="search" id="navSearchForm">
+                        <div class="nav-search__group">
+                            <input
+                                type="search"
+                                name="q"
+                                placeholder="{{ site_search_placeholder|default:'Пошук товарів...' }}"
+                                class="nav-search__input"
+                                value="{{ request.GET.q|default:'' }}"
+                                aria-label="Пошук товарів"
+                                autocomplete="off"
+                                id="navSearchInput"
+                            >
+                            <button type="submit" class="nav-search__submit" aria-label="Знайти">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="nav-search__close" id="navSearchClose" aria-label="Закрити">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="search-autocomplete" id="searchAutocomplete"></div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile search form (full width, toggled) -->
+    <div class="mobile-search-form-container" id="mobileSearchForm">
+        <div class="container">
+            <form action="{% url 'core:search' %}" method="get" class="mobile-search-form" role="search">
+                <div class="mobile-search-input-group">
+                    <input
+                        type="search"
+                        name="q"
+                        placeholder="{{ site_search_placeholder|default:'Пошук товарів...' }}"
+                        class="mobile-search-input"
+                        id="mobileSearchInput"
+                        aria-label="Пошук товарів"
+                        autocomplete="off"
+                    >
+                    <button type="button" class="mobile-search-close" aria-label="Закрити пошук" id="mobileSearchClose">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                    <button type="submit" class="mobile-search-submit" aria-label="Знайти">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

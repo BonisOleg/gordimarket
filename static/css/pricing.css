@@ -1,0 +1,188 @@
+/* Стилі для відображення цін товарів */
+.product-price {
+    margin: 10px 0;
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.price-row.wholesale {
+    opacity: 0.8;
+}
+
+.price-current, .price-wholesale {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.price-current {
+    color: var(--color-brand-primary);
+}
+
+.price-wholesale {
+    color: #4caf50;
+}
+
+.price-old {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+}
+
+.price-type {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.price-row.wholesale .price-type {
+    background: #e8f5e8;
+    color: #4caf50;
+}
+
+.quantity-prices {
+    margin-top: 8px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #2196f3;
+}
+
+.qty-price {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 3px;
+}
+
+.qty-price:last-child {
+    margin-bottom: 0;
+}
+
+.qty-price strong {
+    color: #2196f3;
+}
+
+.additional-prices {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid #eee;
+}
+
+.price-save {
+    font-size: 0.85em;
+    color: #4caf50;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+/* Адаптивність для мобільних */
+@media (max-width: 768px) {
+    .product-price {
+        margin: 8px 0;
+    }
+    
+    .price-row {
+        gap: 6px;
+        margin-bottom: 3px;
+    }
+    
+    .price-current, .price-wholesale {
+        font-size: 1em;
+    }
+    
+    .quantity-prices {
+        padding: 6px;
+        margin-top: 6px;
+    }
+    
+    .qty-price {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .price-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+    }
+    
+    .quantity-prices {
+        font-size: 0.8em;
+    }
+}
+
+/* Стікери товарів */
+.product-stickers {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 2;
+}
+
+.product-sticker {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 0.75em;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+    min-width: 40px;
+}
+
+.sticker-top {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+
+.sticker-new {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    box-shadow: 0 2px 8px rgba(78, 205, 196, 0.4);
+}
+
+.sticker-sale {
+    background: var(--badge-sale);
+    box-shadow: 0 2px 8px rgba(74, 144, 217, 0.4);
+}
+
+/* Анімація для стікерів */
+.product-sticker {
+    animation: stickerPulse 2s ease-in-out infinite;
+}
+
+@keyframes stickerPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Стікери на мобільних */
+@media (max-width: 768px) {
+    .product-stickers {
+        top: 8px;
+        left: 8px;
+        gap: 3px;
+    }
+    
+    .product-sticker {
+        padding: 2px 6px;
+        font-size: 0.7em;
+        min-width: 35px;
+    }
+}

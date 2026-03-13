@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Контакти - {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="contacts-main section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="contact-info-section">
+                    <div class="company-header">
+                        <h2 class="company-name">{{ site_name|upper }}</h2>
+                        {% if site_tagline %}<p class="company-tagline">{{ site_tagline }}</p>{% endif %}
+                    </div>
+                    
+                    <div class="contact-details">
+                        <ul class="contact-list">
+                            {% if site_address %}
+                            <li class="contact-list-item">
+                                <div class="contact-item-icon">📍</div>
+                                <div class="contact-item-content">
+                                    <strong>Адреса:</strong>
+                                    <span>{{ site_address }}</span>
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% if site_phone %}
+                            <li class="contact-list-item">
+                                <div class="contact-item-icon">📞</div>
+                                <div class="contact-item-content">
+                                    <strong>Телефон:</strong>
+                                    <a href="tel:{{ site_phone_raw }}" class="contact-link">{{ site_phone }}</a>
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% if site_email %}
+                            <li class="contact-list-item">
+                                <div class="contact-item-icon">✉️</div>
+                                <div class="contact-item-content">
+                                    <strong>Електронна пошта:</strong>
+                                    <a href="mailto:{{ site_email }}" class="contact-link">{{ site_email }}</a>
+                                </div>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-5">
+                <!-- Графік роботи -->
+                <div class="schedule-card card">
+                    <div class="card-header">
+                        <div class="schedule-icon">
+                            <i class="icon-clock">🕒</i>
+                        </div>
+                        <h3 class="card-title">Графік роботи</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="schedule-list">
+                            {% if site_working_hours %}
+                            <div class="schedule-item">
+                                <span class="schedule-time">{{ site_working_hours }}</span>
+                            </div>
+                            {% endif %}
+                            {% if site_day_off %}
+                            <div class="schedule-item">
+                                <span class="schedule-time">{{ site_day_off }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Контактна форма -->
+                <div class="contact-form-card card">
+                    <div class="card-header">
+                        <h3 class="card-title">Швидкий зв'язок</h3>
+                    </div>
+                    <div class="card-body">
+                        <form class="contact-form" method="post" action="#">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="name" placeholder="Ваше ім'я" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" class="form-control" name="phone" placeholder="Ваш телефон" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" rows="4" placeholder="Ваше повідомлення" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                Відправити повідомлення
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

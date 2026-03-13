@@ -1,0 +1,285 @@
+/* Custom CKEditor Styles */
+
+/* Основні стилі контенту */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: none;
+    margin: 0;
+    padding: 20px;
+    background: white;
+}
+
+/* Заголовки */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: #2c3e50;
+}
+
+h1 {
+    font-size: 2.5em;
+    border-bottom: 3px solid var(--color-brand-primary);
+    padding-bottom: 0.3em;
+    margin-bottom: 0.8em;
+}
+
+h2 {
+    font-size: 2em;
+    border-bottom: 2px solid var(--color-brand-primary);
+    padding-bottom: 0.25em;
+}
+
+h3 {
+    font-size: 1.75em;
+    color: var(--color-brand-primary);
+}
+
+h4 {
+    font-size: 1.5em;
+}
+
+h5 {
+    font-size: 1.25em;
+}
+
+h6 {
+    font-size: 1.1em;
+    color: #666;
+}
+
+/* Параграфи */
+p {
+    margin-bottom: 1em;
+    text-align: justify;
+}
+
+/* Списки */
+ul, ol {
+    margin: 1em 0;
+    padding-left: 2em;
+}
+
+li {
+    margin-bottom: 0.5em;
+}
+
+ul li {
+    list-style-type: none;
+    position: relative;
+}
+
+ul li:before {
+    content: "💎";
+    position: absolute;
+    left: -1.5em;
+    color: var(--color-brand-primary);
+}
+
+ol li {
+    padding-left: 0.5em;
+}
+
+/* Цитати */
+blockquote {
+    border-left: 4px solid var(--color-brand-primary);
+    background: var(--color-bg-secondary);
+    margin: 1.5em 0;
+    padding: 1em 1.5em;
+    font-style: italic;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(255, 20, 147, 0.1);
+}
+
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Посилання */
+a {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-brand-accent);
+    border-bottom-color: var(--color-brand-accent);
+}
+
+/* Зображення */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin: 1em 0;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.02);
+}
+
+/* Таблиці */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+table th {
+    background: linear-gradient(135deg, var(--color-brand-primary), #ffd700);
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+}
+
+table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+table tr:hover {
+    background: #fff5f8;
+}
+
+/* Код */
+code {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 2px 5px;
+    font-family: 'Courier New', monospace;
+    color: #e83e8c;
+    font-size: 0.9em;
+}
+
+pre {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    padding: 1em;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #333;
+}
+
+/* Виділення тексту */
+mark {
+    background: linear-gradient(135deg, var(--badge-top), #ffed4e);
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #333;
+}
+
+strong {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+em {
+    font-style: italic;
+    color: #666;
+}
+
+/* Горизонтальні лінії */
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(135deg, var(--color-brand-primary), #ffd700);
+    margin: 2em 0;
+    border-radius: 1px;
+}
+
+/* Кастомні класи для особливих блоків */
+.highlight {
+    background: var(--color-bg-secondary);
+    border: 2px solid var(--color-brand-primary);
+    border-radius: 8px;
+    padding: 1em;
+    margin: 1.5em 0;
+    position: relative;
+}
+
+.highlight:before {
+    content: "💡";
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    background: white;
+    padding: 0 5px;
+    font-size: 1.2em;
+}
+
+.tip {
+    background: linear-gradient(135deg, #e8f5e8, #d4edda);
+    border-left: 4px solid #28a745;
+    padding: 1em;
+    margin: 1em 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.warning {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border-left: 4px solid #ffc107;
+    padding: 1em;
+    margin: 1em 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.danger {
+    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+    border-left: 4px solid var(--color-error);
+    padding: 1em;
+    margin: 1em 0;
+    border-radius: 0 5px 5px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    h2 {
+        font-size: 1.75em;
+    }
+    
+    h3 {
+        font-size: 1.5em;
+    }
+    
+    table {
+        font-size: 0.9em;
+    }
+    
+    table th,
+    table td {
+        padding: 8px;
+    }
+}

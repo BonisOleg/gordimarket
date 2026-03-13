@@ -1,0 +1,164 @@
+/* ========================================== */
+/*   AGE VERIFICATION MODAL (18+)            */
+/* ========================================== */
+
+.age-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.age-modal {
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xxl);
+  max-width: 600px;
+  width: 90%;
+  box-shadow: var(--shadow-xl);
+  text-align: center;
+  transform: scale(0.9);
+  animation: scaleIn 0.3s ease 0.2s forwards;
+}
+
+.age-modal__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.age-modal__logo-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.age-modal__logo-text {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.age-modal__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-cta-primary);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: 1px;
+}
+
+.age-modal__text {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xl);
+  line-height: var(--line-height-relaxed);
+}
+
+.age-modal__buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.age-modal__btn {
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  min-width: 200px;
+  border: none;
+  white-space: nowrap;
+}
+
+.age-modal__btn--confirm {
+  background: var(--color-cta-primary);
+  color: var(--color-text-white);
+}
+
+.age-modal__btn--confirm:hover {
+  background: var(--color-brand-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.age-modal__btn--deny {
+  background: var(--color-bg-primary);
+  color: var(--color-cta-primary);
+  border: 2px solid var(--color-cta-primary);
+}
+
+.age-modal__btn--deny:hover {
+  background: var(--color-bg-secondary);
+}
+
+@keyframes fadeIn {
+  to { 
+    opacity: 1; 
+  }
+}
+
+@keyframes scaleIn {
+  to { 
+    transform: scale(1); 
+  }
+}
+
+@keyframes fadeOut {
+  from { 
+    opacity: 1; 
+  }
+  to { 
+    opacity: 0; 
+  }
+}
+
+@media (max-width: 768px) {
+  .age-modal {
+    padding: var(--spacing-xl);
+    max-width: 95%;
+  }
+  
+  .age-modal__logo-img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .age-modal__logo-text {
+    font-size: var(--font-size-lg);
+  }
+  
+  .age-modal__buttons {
+    flex-direction: column;
+  }
+  
+  .age-modal__btn {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .age-modal__title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .age-modal__text {
+    font-size: var(--font-size-sm);
+  }
+}
+

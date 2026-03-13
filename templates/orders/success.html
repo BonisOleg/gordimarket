@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Замовлення оформлено - {{ site_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/order-form.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="success-section section-padding">
+    <div class="container">
+        <div class="success-wrapper">
+            <div class="success-icon">✓</div>
+            <h1>Замовлення №{{ order.order_number }} оформлено успішно!</h1>
+            <p class="success-message">Дякуємо за покупку. Ми зв'яжемося з вами найближчим часом.</p>
+            
+            <div class="order-details">
+                <div class="detail-section">
+                    <h2>Контактні дані</h2>
+                    <p><strong>ПІБ:</strong> {{ order.get_customer_name }}</p>
+                    <p><strong>Телефон:</strong> {{ order.phone }}</p>
+                    {% if order.email %}
+                    <p><strong>Email:</strong> {{ order.email }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="detail-section">
+                    <h2>Доставка</h2>
+                    <p><strong>Спосіб:</strong> {{ order.get_delivery_method_display }}</p>
+                    {% if order.delivery_method == 'nova_poshta' %}
+                        <p><strong>Місто:</strong> {{ order.nova_poshta_city }}</p>
+                        <p><strong>Відділення:</strong> {{ order.nova_poshta_warehouse }}</p>
+                    {% else %}
+                        <p><strong>Місто:</strong> {{ order.ukrposhta_city }}</p>
+                        <p><strong>Адреса:</strong> {{ order.ukrposhta_address }}</p>
+                        <p><strong>Індекс:</strong> {{ order.ukrposhta_index }}</p>
+                    {% endif %}
+                </div>
+                
+                <div class="detail-section">
+                    <h2>Товари</h2>
+                    {% for item in order.items.all %}
+                        <div class="order-item">
+                            <span>{{ item.product.name }} × {{ item.quantity }}</span>
+                            <span>{{ item.get_cost }} ₴</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="detail-section">
+                    <h2>Оплата</h2>
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Повна сума товарів:</span>
+                            <span>{{ order.subtotal_retail }} ₴</span>
+                        </div>
+                        {% if order.product_discount > 0 %}
+                        <div class="price-row discount">
+                            <span>Знижка на товари:</span>
+                            <span>-{{ order.product_discount }} ₴</span>
+                        </div>
+                        {% endif %}
+                        {% if order.promo_code %}
+                        <div class="price-row promo">
+                            <span>Промокод ({{ order.promo_code }}):</span>
+                            <span>-{{ order.promo_discount }} ₴</span>
+                        </div>
+                        {% endif %}
+                        <div class="price-row total">
+                            <span>Підсумкова сума:</span>
+                            <span>{{ order.final_total }} ₴</span>
+                        </div>
+                    </div>
+                    <p><strong>Спосіб оплати:</strong> {{ order.get_payment_method_display }}</p>
+                    <p><strong>Статус оплати:</strong> 
+                        {% if order.is_paid %}
+                            <span class="status-paid">Оплачено</span>
+                        {% else %}
+                            <span class="status-pending">Очікує оплати</span>
+                        {% endif %}
+                    </p>
+                </div>
+                
+                {% if order.notes %}
+                <div class="detail-section">
+                    <h2>Коментар</h2>
+                    <p>{{ order.notes }}</p>
+                </div>
+                {% endif %}
+            </div>
+            
+            <a href="/" class="btn btn-primary">Повернутися на головну</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

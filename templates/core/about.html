@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Про нас - {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="about-section section-padding">
+    <div class="container">
+
+        <h1 class="section-title">Про наш магазин</h1>
+
+        <div class="about-content">
+            {% if site_settings_obj and site_settings_obj.about_content %}
+                {{ site_settings_obj.about_content|safe }}
+            {% else %}
+                <p>{{ site_name }} — інтернет-магазин з широким асортиментом товарів та зручним обслуговуванням.</p>
+                <h3>Чому обирають нас:</h3>
+                <ul>
+                    <li><strong>Якість і безпека:</strong> Тільки перевірені товари від надійних постачальників;</li>
+                    <li><strong>Швидка доставка:</strong> Відправка протягом 24 годин по всій Україні;</li>
+                    <li><strong>Зручна оплата:</strong> Онлайн та при отриманні;</li>
+                    <li><strong>Підтримка:</strong> Ми завжди готові допомогти вам з вибором.</li>
+                </ul>
+                <p>Замовляйте онлайн з комфортом вашого дому — швидка доставка та якісний сервіс гарантовані.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - {{ site_name }}{% endblock %}
+{% block description %}{{ product.meta_description|default:product.description|truncatewords:30 }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/products.css' %}">
+{% endblock %}
+
+{% block structured_data %}
+{{ block.super }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ product.name|escapejs }}",
+  "description": "{% autoescape off %}{{ product.description|striptags|truncatewords:200|escapejs }}{% endautoescape %}",
+  "sku": "{{ product.sku }}",
+  "url": "{{ request.build_absolute_uri }}",
+  {% if product.gtin %}"gtin": "{{ product.gtin }}",{% endif %}
+  {% if product.mpn %}"mpn": "{{ product.mpn }}",{% endif %}
+  {% if product.brand or product.vendor_name %}
+  "brand": {
+    "@type": "Brand",
+    "name": "{{ product.brand|default:product.vendor_name|escapejs }}"
+  },
+  {% endif %}
+  {% if product.main_image %}
+  "image": ["{{ request.scheme }}://{{ request.get_host }}{{ product.main_image.get_image_url }}"],
+  {% endif %}
+  {% if product.weight %}
+  "weight": {
+    "@type": "QuantitativeValue",
+    "value": "{{ product.weight }}",
+    "unitCode": "KGM"
+  },
+  {% endif %}
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ request.build_absolute_uri }}",
+    "priceCurrency": "UAH",
+    "price": "{{ product.get_current_price }}",
+    "availability": "{% if product.is_in_stock %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/{% if product.condition == 'new' %}NewCondition{% elif product.condition == 'refurbished' %}RefurbishedCondition{% else %}UsedCondition{% endif %}",
+    "seller": {
+      "@type": "Organization",
+      "name": "GORDI market"
+    }
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="container">
+        
+        <div class="product-detail-grid">
+            <!-- Галерея зображень -->
+            <div class="product-gallery">
+                <div class="product-main-image" id="mainImage">
+                    {% if product.images.all %}
+                        <img src="{{ product.images.first.get_image_url }}" alt="{{ product.name }}" id="currentImage">
+                    {% else %}
+                        <div class="product-placeholder">
+                            <span>📦</span>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {% if product.images.count > 1 %}
+                <div class="product-thumbnails">
+                    {% for image in product.images.all %}
+                    <div class="thumbnail {% if forloop.first %}active{% endif %}" data-image="{{ image.get_image_url }}">
+                        <img src="{{ image.get_image_url }}" alt="{{ image.alt_text|default:product.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Інформація про товар -->
+            <div class="product-info">
+                <h1>{{ product.name }}</h1>
+                
+                {% if product.sku %}
+                <div class="product-sku">Артикул: {{ product.sku }}</div>
+                {% endif %}
+                
+                <!-- Дії -->
+                {% if product.is_in_stock %}
+                <div class="product-detail-actions">
+                    <div class="quantity-selector">
+                        <button class="quantity-btn" data-action="decrease">−</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="{{ product.stock }}" id="productQuantity">
+                        <button class="quantity-btn" data-action="increase">+</button>
+                    </div>
+                    <button class="btn-primary btn-add-cart" data-product-id="{{ product.id }}">
+                        Додати в кошик
+                    </button>
+                    <button class="btn-wishlist" data-product-id="{{ product.id }}" title="Додати в обране">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </button>
+                </div>
+                {% endif %}
+                
+                <!-- Бейджі -->
+                <div class="product-badges">
+                    {% include 'includes/sale_countdown.html' with product=product %}
+                    {% if product.is_new %}
+                        <span class="badge badge-new">NEW</span>
+                    {% endif %}
+                    {% if product.is_top %}
+                        <span class="badge badge-top">TOP</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Ціна -->
+                <div class="product-detail-price">
+                    {% if product.is_sale_active %}
+                        <span class="price-new">{{ product.sale_price }} ₴</span>
+                        <span class="price-old">{{ product.retail_price }} ₴</span>
+                    {% else %}
+                        <span class="price-current">{{ product.retail_price }} ₴</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Градація цін -->
+                {% if product.price_3_qty or product.price_5_qty %}
+                <div class="price-tiers">
+                    <h3>Вигідні ціни при покупці:</h3>
+                    <ul>
+                        {% if product.price_3_qty %}
+                        <li>Від 3 шт - {{ product.price_3_qty }} ₴</li>
+                        {% endif %}
+                        {% if product.price_5_qty %}
+                        <li>Від 5 шт - {{ product.price_5_qty }} ₴</li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+                
+                <!-- Наявність -->
+                <div class="product-stock">
+                    {% if product.is_in_stock %}
+                        <span class="stock-available">✓ В наявності ({{ product.stock }} шт)</span>
+                    {% else %}
+                        <span class="stock-unavailable">✗ Немає в наявності</span>
+                    {% endif %}
+                </div>
+                
+                <!-- Вкладки з описом та характеристиками -->
+                <div class="product-tabs">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="description">Опис</button>
+                        <button class="tab-btn" data-tab="characteristics">Характеристики</button>
+                    </div>
+                    
+                    <div class="tabs-content">
+                        <!-- Опис -->
+                        <div class="tab-panel active" id="description">
+                            {% if product.description %}
+                                {{ product.description|safe }}
+                            {% else %}
+                                <p>Опис товару відсутній</p>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Характеристики -->
+                        <div class="tab-panel" id="characteristics">
+                            {% if product.attributes.all %}
+                                {% for attr in product.attributes.all %}
+                                <div class="attribute-row">
+                                    <span class="attribute-name">{{ attr.name }}:</span>
+                                    <span class="attribute-value">{{ attr.value }}</span>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>Характеристики товару відсутні</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Категорія -->
+                <div class="product-category-link">
+                    <a href="{{ product.primary_category.get_absolute_url }}">← Повернутися до категорії "{{ product.primary_category.name }}"</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Схожі товари -->
+        {% with similar=product.get_similar_products %}
+        {% if similar %}
+        <section class="similar-products">
+            <h2 class="section-title text-center">Схожі товари</h2>
+            <div class="products-grid">
+                {% for item in similar %}
+                    {% include 'includes/product_card.html' with product=item %}
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        {% endwith %}
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/product-detail.js' %}" defer></script>
+{% endblock %}
+

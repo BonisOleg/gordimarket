@@ -1,0 +1,327 @@
+/* Секція відгуків */
+
+.reviews-section {
+    padding: 60px 0;
+    margin-top: 40px; /* Відступ від основного контенту */
+    clear: both; /* Гарантує що секція не перекривається з sidebar */
+}
+
+.reviews-section .section-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--neutral-dark);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.reviews-slider-container {
+    position: relative;
+    padding: 0 50px;
+}
+
+.reviews-slider {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding: 20px 0;
+    margin: 0 -12px;
+    padding: 20px 12px;
+}
+
+.reviews-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.review-card {
+    flex: 0 0 380px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.review-card.expanded {
+    height: auto;
+}
+
+.review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.review-product-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--gray-light);
+}
+
+.review-author-info {
+    flex: 1;
+}
+
+.review-author-name {
+    font-weight: 600;
+    color: var(--neutral-dark);
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.review-rating {
+    display: flex;
+    gap: 4px;
+}
+
+.star {
+    font-size: 16px;
+    color: var(--badge-top);
+}
+
+.star.empty {
+    color: var(--gray-medium);
+}
+
+.review-category-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(74, 144, 217, 0.1);
+    color: var(--color-cta-primary);
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.review-text {
+    color: var(--neutral-medium);
+    line-height: 1.6;
+    font-size: 14px;
+    position: relative;
+}
+
+.review-text.collapsed {
+    max-height: 60px;
+    overflow: hidden;
+}
+
+.review-text.collapsed::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(transparent, var(--white));
+}
+
+.review-text.expanded {
+    max-height: none;
+    overflow: visible;
+}
+
+.review-read-more {
+    background: none;
+    border: none;
+    color: var(--color-cta-primary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+    transition: opacity 0.3s ease;
+}
+
+.review-read-more:hover {
+    opacity: 0.8;
+}
+
+.review-date {
+    font-size: 12px;
+    color: var(--gray-medium);
+    text-align: right;
+}
+
+.reviews-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--gray-light);
+    color: var(--neutral-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.reviews-nav-btn:hover {
+    background: var(--color-cta-primary);
+    border-color: var(--color-cta-primary);
+    color: var(--white);
+}
+
+.reviews-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.reviews-prev-btn {
+    left: 0;
+}
+
+.reviews-next-btn {
+    right: 0;
+}
+
+/* Планшетна версія */
+@media (max-width: 1024px) {
+    .reviews-section {
+        padding: 50px 0;
+    }
+
+    .reviews-section .section-title {
+        font-size: 28px;
+        margin-bottom: 32px;
+    }
+
+    .reviews-slider-container {
+        padding: 0 45px;
+    }
+
+    .review-card {
+        flex: 0 0 320px;
+        padding: 20px;
+    }
+
+    .reviews-slider {
+        gap: 20px;
+    }
+}
+
+/* Мобільна версія */
+@media (max-width: 767.98px) {
+    .reviews-section {
+        padding: 40px 0;
+    }
+
+    .reviews-section .section-title {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+
+    .reviews-slider-container {
+        padding: 0 40px;
+    }
+
+    .review-card {
+        flex: 0 0 calc(100vw - 100px);
+        padding: 16px;
+    }
+    
+    .review-card.expanded {
+        height: auto;
+    }
+
+    .reviews-slider {
+        gap: 20px;
+        padding: 16px 10px;
+        margin: 0 -10px;
+    }
+
+    .review-header {
+        padding-bottom: 12px;
+    }
+
+    .review-product-image {
+        width: 40px;
+        height: 40px;
+    }
+
+    .review-author-name {
+        font-size: 14px;
+    }
+
+    .review-rating .star {
+        font-size: 14px;
+    }
+
+    .review-text {
+        font-size: 13px;
+    }
+    
+    .review-text.collapsed {
+        max-height: 55px;
+    }
+
+    .reviews-nav-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .reviews-nav-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Дуже маленькі екрани */
+@media (max-width: 375px) {
+    .reviews-slider-container {
+        padding: 0 35px;
+    }
+
+    .review-card {
+        flex: 0 0 260px;
+        padding: 14px;
+    }
+
+    .reviews-nav-btn {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* iOS Safari оптимізації */
+@supports (-webkit-touch-callout: none) {
+    .reviews-slider {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .review-card {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+
+    .reviews-nav-btn {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .reviews-slider,
+    .review-card,
+    .reviews-nav-btn {
+        transition: none;
+    }
+}

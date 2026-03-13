@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Оформлення замовлення - {{ site_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/order-form.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="order-section section-padding">
+    <div class="container">
+        <h1 class="section-title">Оформлення замовлення</h1>
+        
+        <div class="order-layout">
+            <div class="order-form-wrapper">
+                <form method="post" id="orderForm" novalidate>
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="form-section">
+                        <h2>Контактні дані</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ form.last_name.id_for_label }}">Прізвище <span class="required">*</span></label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="error">{{ form.last_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.first_name.id_for_label }}">Ім'я <span class="required">*</span></label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="error">{{ form.first_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.patronymic.id_for_label }}">По-батькові</label>
+                            {{ form.patronymic }}
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ form.phone.id_for_label }}">Телефон <span class="required">*</span></label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <div class="error">{{ form.phone.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="error">{{ form.email.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>Спосіб оплати <span class="required">*</span></h2>
+                        <div class="radio-group">
+                            {% for choice in form.payment_method %}
+                                <label class="radio-label">
+                                    {{ choice.tag }}
+                                    <span>{{ choice.choice_label }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>Спосіб доставки <span class="required">*</span></h2>
+                        <div class="radio-group">
+                            {% for choice in form.delivery_method %}
+                                <label class="radio-label">
+                                    {{ choice.tag }}
+                                    <span>{{ choice.choice_label }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="delivery-fields" id="novaPoshtaFields">
+                            <div class="form-group">
+                                <label for="{{ form.nova_poshta_city.id_for_label }}">Місто <span class="required">*</span></label>
+                                {{ form.nova_poshta_city }}
+                                {{ form.nova_poshta_city_ref }}
+                                {% if form.nova_poshta_city.errors %}
+                                    <div class="error">{{ form.nova_poshta_city.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.nova_poshta_warehouse.id_for_label }}">Відділення або поштомат <span class="required">*</span></label>
+                                {{ form.nova_poshta_warehouse }}
+                                {{ form.nova_poshta_warehouse_ref }}
+                                {% if form.nova_poshta_warehouse.errors %}
+                                    <div class="error">{{ form.nova_poshta_warehouse.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="delivery-fields" id="ukrposhtaFields">
+                            <div class="form-group">
+                                <label for="{{ form.ukrposhta_city.id_for_label }}">Місто <span class="required">*</span></label>
+                                {{ form.ukrposhta_city }}
+                                {% if form.ukrposhta_city.errors %}
+                                    <div class="error">{{ form.ukrposhta_city.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.ukrposhta_address.id_for_label }}">Адреса <span class="required">*</span></label>
+                                {{ form.ukrposhta_address }}
+                                {% if form.ukrposhta_address.errors %}
+                                    <div class="error">{{ form.ukrposhta_address.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.ukrposhta_index.id_for_label }}">Поштовий індекс <span class="required">*</span></label>
+                                {{ form.ukrposhta_index }}
+                                {% if form.ukrposhta_index.errors %}
+                                    <div class="error">{{ form.ukrposhta_index.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>Коментар до замовлення</h2>
+                        <div class="form-group">
+                            {{ form.notes }}
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+                        Оформити замовлення
+                    </button>
+                </form>
+            </div>
+            
+            <div class="order-summary">
+                <h2>Ваше замовлення</h2>
+                
+                <div class="summary-items">
+                    {% for item in cart %}
+                        <div class="summary-item">
+                            <div class="item-info">
+                                <span class="item-name">{{ item.product.name }}</span>
+                                <span class="item-qty">× {{ item.quantity }}</span>
+                            </div>
+                            <span class="item-price">{{ item.total_price }} ₴</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="summary-totals">
+                    <div class="summary-row">
+                        <span>Сума товарів:</span>
+                        <span>{{ cart.get_total_retail_price }} ₴</span>
+                    </div>
+                    
+                    {% if cart.get_product_discount > 0 %}
+                    <div class="summary-row discount">
+                        <span>Знижка на товари:</span>
+                        <span>-{{ cart.get_product_discount }} ₴</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if cart.promo_code %}
+                    <div class="summary-row promo">
+                        <span>Промокод ({{ cart.promo_code }}):</span>
+                        <span>-{{ cart.get_promo_discount }} ₴</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="summary-row total">
+                        <span>До сплати:</span>
+                        <span>{{ cart.get_total_price }} ₴</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/order-form.js' %}"></script>
+<script src="{% static 'js/novaposhta-autocomplete.js' %}"></script>
+{% endblock %}
+

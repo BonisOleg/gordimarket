@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Скрипт для налаштування автоматичної синхронізації з картинками
+# Запуск: ./setup_sync_cron.sh
+
+set -e
+
+PROJECT_DIR="/Users/sofiadmitrenko/Sites/intshop"
+
+echo "╔═══════════════════════════════════════════════════════════════╗"
+echo "║        НАЛАШТУВАННЯ АВТОМАТИЧНОЇ СИНХРОНІЗАЦІЇ                ║"
+echo "╚═══════════════════════════════════════════════════════════════╝"
+echo ""
+
+# Створюємо cron job файл
+CRON_FILE="/tmp/intshop_sync_cron.txt"
+
+# Поточні cron jobs
+crontab -l > "$CRON_FILE" 2>/dev/null || true
+
+# Видаляємо старі завдання якщо є
+grep -v "sync_with_images\|download_all_images\|update_prices\|sync_products\|update_prices_xls" "$CRON_FILE" > "${CRON_FILE}.tmp" 2>/dev/null || true
+mv "${CRON_FILE}.tmp" "$CRON_FILE" 2>/dev/null || true
+
+echo "Налаштовуємо автоматичну синхронізацію..."
+echo ""
+
+# Додаємо нові завдання
+echo "" >> "$CRON_FILE"
+echo "# Оновлення цін та наявності з XLS (кожні 2 години)" >> "$CRON_FILE"
+echo "0 */2 * * * cd $PROJECT_DIR && python3 manage.py update_prices_xls >> /tmp/intshop_prices.log 2>&1" >> "$CRON_FILE"
+
+echo "" >> "$CRON_FILE"
+echo "# Повна синхронізація з XML (щодня о 8:30)" >> "$CRON_FILE"
+echo "30 8 * * * cd $PROJECT_DIR && python3 manage.py sync_products >> /tmp/intshop_sync.log 2>&1" >> "$CRON_FILE"
+
+# Встановлюємо crontab
+crontab "$CRON_FILE"
+rm "$CRON_FILE"
+
+echo "✅ Автоматична синхронізація налаштована успішно!"
+echo ""
+echo "📋 Розклад завдань:"
+echo "   • Оновлення цін (XLS): кожні 2 години"
+echo "   • Повна синхронізація (XML): щодня о 8:30"
+echo ""
+echo "📁 Логи:"
+echo "   • Ціни: /tmp/intshop_prices.log"
+echo "   • Синхронізація: /tmp/intshop_sync.log"
+echo ""
+echo "🛠️  Корисні команди:"
+echo "   • Переглянути поточні завдання: crontab -l"
+echo "   • Редагувати завдання: crontab -e"
+echo "   • Переглянути логи: tail -f /tmp/intshop_*.log"
+echo "   • Вручну оновити ціни: python3 manage.py update_prices_xls"
+echo "   • Вручну синхронізувати: python3 manage.py sync_products"
+echo ""

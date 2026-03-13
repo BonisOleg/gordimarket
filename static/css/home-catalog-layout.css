@@ -1,0 +1,21 @@
+/* Home layout — без бокового меню */
+.home-main-layout {
+  padding: 0 0 var(--spacing-xl) 0;
+  width: 100%;
+  position: relative;
+}
+
+.home-content {
+  min-width: 0;
+  width: 100%;
+}
+
+.banner-slider-section {
+  margin-bottom: var(--spacing-2xl);
+}
+
+@media (max-width: 991px) {
+  .home-main-layout {
+    padding: 0 0 var(--spacing-md) 0;
+  }
+}

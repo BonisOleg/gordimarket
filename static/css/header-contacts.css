@@ -1,0 +1,160 @@
+.header-contacts {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.contact-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--color-cta-primary);
+    padding: 0;
+}
+
+.contact-icon-btn:hover {
+    transform: scale(1.1);
+    color: var(--color-brand-light);
+}
+
+.contact-icon-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    transition: stroke 0.3s ease;
+}
+
+.messenger-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.phone-popup {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    min-width: 240px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.phone-popup.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.phone-popup::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+}
+
+.phone-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.phone-popup-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: var(--neutral-medium);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.phone-popup-close:hover {
+    color: var(--neutral-dark);
+}
+
+.phone-popup-number {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--neutral-dark);
+    padding-right: 24px;
+    white-space: nowrap;
+}
+
+.phone-popup-copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--color-cta-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.phone-popup-copy:hover {
+    background: var(--color-brand-light);
+}
+
+.phone-popup-copy svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+}
+
+@media (max-width: 991px) {
+    .header-contacts {
+        gap: 8px;
+    }
+    
+    .contact-icon-btn {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .contact-icon-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .messenger-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .header-contacts {
+        display: none;
+    }
+}
+

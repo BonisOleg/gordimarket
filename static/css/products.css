@@ -1,0 +1,478 @@
+/* 
+ПРИМІТКА: Стилі карток товарів перенесено до catalog.css для уникнення дублікатів.
+Цей файл залишено для можливих майбутніх специфічних стилів продуктів.
+
+Основні стилі карток товарів тепер знаходяться в:
+- static/css/catalog.css (секція КАРТКА ТОВАРУ)
+
+Якщо потрібно додати специфічні стилі для окремих сторінок продуктів,
+які не стосуються каталогу, додавайте їх тут.
+*/
+
+/* Стилі для сторінок товарів (products) - РЕЗЕРВ */
+/* Можна використовувати для специфічних стилів детальної сторінки товару */
+
+/* Детальна сторінка товару */
+.product-detail {
+    margin: 40px 0;
+}
+
+.product-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.product-gallery {
+    position: sticky;
+    top: 110px;
+    align-self: flex-start;
+}
+
+@media (max-width: 992px) {
+    .product-gallery {
+        position: relative;
+        top: auto;
+    }
+}
+
+.product-main-image {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background: #f8f9fa;
+}
+
+.product-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.thumbnail {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    border-color: var(--color-brand-primary);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 15px 0;
+}
+
+.product-sku {
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.product-detail-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 30px 0;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.quantity-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: #f8f9fa;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn:hover {
+    background: #e9ecef;
+    color: var(--color-cta-primary);
+}
+
+.quantity-btn:active {
+    background: #dee2e6;
+}
+
+.quantity-input {
+    width: 50px;
+    height: 40px;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.quantity-input:focus {
+    outline: none;
+}
+
+.btn-add-cart {
+    flex: 1;
+    height: 45px;
+    padding: 0 24px;
+    background: var(--color-cta-primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-add-cart:hover {
+    background: var(--color-brand-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 144, 217, 0.3);
+}
+
+.btn-add-cart:active {
+    transform: translateY(0);
+}
+
+.btn-wishlist {
+    width: 45px;
+    height: 45px;
+    border: 2px solid var(--color-cta-primary);
+    background: #fff;
+    color: var(--color-cta-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.btn-wishlist svg {
+    width: 24px;
+    height: 24px;
+}
+
+.btn-wishlist:hover {
+    background: var(--color-cta-primary);
+    color: #fff;
+}
+
+.btn-wishlist:hover svg path {
+    fill: #fff;
+    stroke: #fff;
+}
+
+.btn-wishlist.active {
+    background: var(--color-cta-primary);
+    color: #fff;
+}
+
+.btn-wishlist.active svg path {
+    fill: #fff;
+    stroke: #fff;
+}
+
+.product-detail-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-brand-primary);
+    margin: 20px 0;
+}
+
+.product-detail-price .price-old {
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+.product-tabs {
+    margin: 30px 0;
+}
+
+.tabs-header {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #999;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    bottom: -2px;
+}
+
+.tab-btn:hover {
+    color: var(--color-cta-primary);
+}
+
+.tab-btn.active {
+    color: var(--color-cta-primary);
+    border-bottom-color: var(--color-cta-primary);
+}
+
+.tabs-content {
+    min-height: 200px;
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+.tab-panel p {
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.attribute-row {
+    display: flex;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.attribute-row:last-child {
+    border-bottom: none;
+}
+
+.attribute-name {
+    font-weight: 600;
+    color: #333;
+    min-width: 180px;
+    flex-shrink: 0;
+}
+
+.attribute-value {
+    color: #666;
+}
+
+.product-category-link {
+    margin-top: 30px;
+}
+
+.product-category-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--color-cta-primary);
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid var(--color-cta-primary);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.product-category-link a:hover {
+    background: var(--color-brand-accent);
+    border-color: var(--color-brand-accent);
+    transform: translateX(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 217, 0.3);
+}
+
+.similar-products {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #e9ecef;
+}
+
+.similar-products .section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Адаптивність для детальної сторінки */
+@media (max-width: 992px) {
+    .product-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-detail {
+        margin: 20px 0;
+    }
+    
+    .product-detail-grid {
+        gap: 20px;
+    }
+    
+    .product-info h1 {
+        font-size: 1.5rem;
+    }
+    
+    .product-detail-price {
+        font-size: 1.5rem;
+    }
+    
+    .product-detail-actions {
+        gap: 8px;
+        margin: 15px 0 25px 0;
+    }
+    
+    .quantity-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    
+    .quantity-input {
+        width: 45px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .btn-add-cart {
+        height: 40px;
+        padding: 0 16px;
+        font-size: 14px;
+    }
+    
+    .btn-wishlist {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .btn-wishlist svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .product-tabs {
+        margin: 20px 0;
+    }
+    
+    .tabs-header {
+        gap: 4px;
+    }
+    
+    .tab-btn {
+        padding: 10px 16px;
+        font-size: 14px;
+        flex: 1;
+        text-align: center;
+    }
+    
+    .tabs-content {
+        min-height: 150px;
+    }
+    
+    .attribute-name {
+        min-width: 120px;
+        font-size: 14px;
+    }
+    
+    .attribute-value {
+        font-size: 14px;
+    }
+    
+    .attribute-row {
+        padding: 10px 0;
+    }
+    
+    .product-category-link {
+        margin-top: 20px;
+    }
+    
+    .product-category-link a {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .similar-products {
+        margin-top: 40px;
+        padding-top: 30px;
+    }
+    
+    .similar-products .section-title {
+        font-size: 1.35rem;
+        margin-bottom: 20px;
+    }
+    
+    .similar-products .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tab-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .attribute-name {
+        min-width: 100px;
+        font-size: 13px;
+    }
+    
+    .attribute-value {
+        font-size: 13px;
+    }
+}

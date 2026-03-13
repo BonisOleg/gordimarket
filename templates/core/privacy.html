@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Політика конфіденційності - {{ site_name }}{% endblock %}
+
+{% block body_class %}privacy-page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/legal-pages.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="legal-section section-padding">
+    <div class="container">
+
+        <h1 class="section-title">Політика конфіденційності</h1>
+
+        <div class="legal-content">
+
+            <div class="info-block info-block--success">
+                <h2>🔒 Захист ваших даних</h2>
+                <p>Ця Політика конфіденційності описує, як {{ site_name }} збирає, використовує та захищає вашу особисту інформацію.</p>
+                <p><strong>Ми гарантуємо захист ваших персональних даних.</strong></p>
+            </div>
+
+            <div class="info-block">
+                <h2>🔒 Загальні положення</h2>
+                <p><strong>Ми поважаємо вашу приватність і зобов'язуємося захищати персональні дані, які ви нам надаєте.</strong></p>
+            </div>
+
+            <div class="info-block">
+                <h2>📋 Які дані ми збираємо</h2>
+                <h3>Особиста інформація:</h3>
+                <ul class="data-list">
+                    <li>👤 Ім'я та прізвище</li>
+                    <li>📧 Електронна пошта</li>
+                    <li>📞 Номер телефону</li>
+                    <li>📍 Адреса доставки</li>
+                </ul>
+                <h3>Технічна інформація:</h3>
+                <ul class="data-list">
+                    <li>🌐 IP-адреса</li>
+                    <li>📱 Тип пристрою та браузера</li>
+                    <li>📊 Статистика відвідувань</li>
+                    <li>🍪 Cookies та інші технології відстеження</li>
+                </ul>
+                <h3>Інформація про замовлення:</h3>
+                <ul class="data-list">
+                    <li>🛒 Історія покупок</li>
+                    <li>💰 Платіжна інформація (БЕЗ збереження карткових даних)</li>
+                    <li>📦 Деталі доставки</li>
+                </ul>
+            </div>
+
+            <div class="info-block">
+                <h2>🎯 Для чого ми використовуємо ваші дані</h2>
+                <div class="usage-grid">
+                    <div class="usage-item">
+                        <h4>🛍️ Обробка замовлень</h4>
+                        <p>Обробка, підтвердження та виконання ваших замовлень</p>
+                    </div>
+                    <div class="usage-item">
+                        <h4>📞 Зв'язок з клієнтами</h4>
+                        <p>Інформування про статус замовлення, консультації</p>
+                    </div>
+                    <div class="usage-item">
+                        <h4>📣 Маркетинг</h4>
+                        <p>Розсилка про акції та новинки (за згодою)</p>
+                    </div>
+                    <div class="usage-item">
+                        <h4>📈 Аналітика</h4>
+                        <p>Покращення роботи сайту та сервісу</p>
+                    </div>
+                    <div class="usage-item">
+                        <h4>🔐 Безпека</h4>
+                        <p>Запобігання шахрайству та зловживанням</p>
+                    </div>
+                    <div class="usage-item">
+                        <h4>📋 Звітність</h4>
+                        <p>Ведення обліку відповідно до законодавства</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <h2>🍪 Використання Cookies</h2>
+                <p>Наш сайт використовує cookies для:</p>
+                <ul>
+                    <li>🛒 Збереження товарів у кошику</li>
+                    <li>🔑 Автентифікації користувачів</li>
+                    <li>📊 Аналізу відвідуваності</li>
+                    <li>🎯 Персоналізації контенту</li>
+                </ul>
+                <div class="cookie-info">
+                    <h4>Типи cookies:</h4>
+                    <ul>
+                        <li><strong>Необхідні:</strong> забезпечують основну функціональність</li>
+                        <li><strong>Аналітичні:</strong> допомагають зрозуміти поведінку користувачів</li>
+                        <li><strong>Маркетингові:</strong> для показу релевантної реклами</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <h2>🤝 Розкриття інформації третім особам</h2>
+                <p>Ми передаємо тільки необхідний мінімум даних:</p>
+                <div class="sharing-grid">
+                    <div class="sharing-item">
+                        <h4>📦 Службам доставки</h4>
+                        <p>Нова Пошта, Укрпошта — ім'я, телефон, адреса доставки</p>
+                    </div>
+                    <div class="sharing-item">
+                        <h4>💳 Платіжним системам</h4>
+                        <p>Для обробки платежів відповідно до законодавства</p>
+                    </div>
+                    <div class="sharing-item">
+                        <h4>📊 Аналітичним сервісам</h4>
+                        <p>Google Analytics — тільки анонімна статистика</p>
+                    </div>
+                    <div class="sharing-item">
+                        <h4>⚖️ Державним органам</h4>
+                        <p>Тільки при наявності офіційного запиту згідно законодавства</p>
+                    </div>
+                </div>
+                <ul class="list-success">
+                    <li>❌ Ми НЕ продаємо ваші персональні дані</li>
+                    <li>❌ Ми НЕ передаємо дані рекламним агенціям без вашої згоди</li>
+                    <li>✅ Ми ЗАВЖДИ захищаємо вашу приватність</li>
+                </ul>
+            </div>
+
+            <div class="info-block">
+                <h2>🛡️ Захист ваших даних</h2>
+                <div class="security-measures">
+                    <div class="measure">
+                        <span class="measure-icon">🔐</span>
+                        <div>
+                            <h4>SSL-шифрування</h4>
+                            <p>Захист передачі даних між браузером і сервером</p>
+                        </div>
+                    </div>
+                    <div class="measure">
+                        <span class="measure-icon">🔒</span>
+                        <div>
+                            <h4>Безпечне зберігання</h4>
+                            <p>Дані зберігаються на захищених серверах</p>
+                        </div>
+                    </div>
+                    <div class="measure">
+                        <span class="measure-icon">👥</span>
+                        <div>
+                            <h4>Обмежений доступ</h4>
+                            <p>Доступ до даних мають лише уповноважені співробітники</p>
+                        </div>
+                    </div>
+                    <div class="measure">
+                        <span class="measure-icon">🔄</span>
+                        <div>
+                            <h4>Регулярні оновлення</h4>
+                            <p>Постійне оновлення систем безпеки</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <h2>👤 Ваші права</h2>
+                <div class="rights-grid">
+                    <div class="right-item">
+                        <h4>📖 Доступ</h4>
+                        <p>Отримати інформацію про збережені дані</p>
+                    </div>
+                    <div class="right-item">
+                        <h4>✏️ Виправлення</h4>
+                        <p>Виправити неточні або застарілі дані</p>
+                    </div>
+                    <div class="right-item">
+                        <h4>🗑️ Видалення</h4>
+                        <p>Запросити видалення персональних даних</p>
+                    </div>
+                    <div class="right-item">
+                        <h4>⏸️ Обмеження</h4>
+                        <p>Обмежити обробку ваших даних</p>
+                    </div>
+                    <div class="right-item">
+                        <h4>📤 Портативність</h4>
+                        <p>Отримати ваші дані у зручному форматі</p>
+                    </div>
+                    <div class="right-item">
+                        <h4>❌ Заперечення</h4>
+                        <p>Заперечити проти обробки ваших даних</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-block">
+                <h2>⏰ Строки зберігання даних</h2>
+                <ul class="retention-list">
+                    <li><strong>Дані клієнтів:</strong> 3 роки після останньої покупки</li>
+                    <li><strong>Історія замовлень:</strong> 5 років (згідно податкового законодавства)</li>
+                    <li><strong>Маркетингові дані:</strong> до відкликання згоди</li>
+                    <li><strong>Технічні логи:</strong> 1 рік</li>
+                    <li><strong>Cookies:</strong> відповідно до налаштувань браузера</li>
+                </ul>
+            </div>
+
+            <div class="info-block">
+                <h2>📝 Зміни в політиці</h2>
+                <p>Ми можемо оновлювати цю Політику конфіденційності час від часу. Про значні зміни ми повідомимо вас електронною поштою або через повідомлення на сайті.</p>
+            </div>
+
+            <div class="contact-block">
+                <h2>📞 Контакти щодо конфіденційності</h2>
+                <p>З питаннями про обробку персональних даних звертайтеся:</p>
+                <div class="contact-info">
+                    {% if site_phone %}<div class="contact-item"><strong>📞 Телефон:</strong> {{ site_phone }}</div>{% endif %}
+                    {% if site_email %}<div class="contact-item"><strong>📧 Email:</strong> {{ site_email }}</div>{% endif %}
+                </div>
+            </div>
+
+            <div class="date-block">
+                <p><small>Остання редакція: {{ "now"|date:"Y" }} рік</small></p>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

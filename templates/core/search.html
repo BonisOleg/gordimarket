@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if query %}Пошук: {{ query }} - {{ site_name }}{% else %}Пошук товарів - {{ site_name }}{% endif %}
+{% endblock %}
+
+{% block description %}
+    {% if query %}Результати пошуку товарів за запитом "{{ query }}" в інтернет-магазині {{ site_name }}.{% else %}Пошук товарів в магазині {{ site_name }}.{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/search-page.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    window.searchQuery = "{{ query|escapejs }}";
+    window.initialCount = {{ initial_count|default:0 }};
+</script>
+<script src="{% static 'js/search-pagination.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<main class="search-page">
+    <div class="container">
+        <!-- Search Header -->
+        <div class="search-header">
+            {% if query %}
+                <h1 class="search-title">
+                    Результати пошуку: <span class="search-query">"{{ query }}"</span>
+                </h1>
+                <div class="search-meta">
+                    <p class="results-count" id="resultsCount">
+                        Завантаження<span class="loading-dots">...</span>
+                    </p>
+                </div>
+            {% else %}
+                <h1 class="search-title">Пошук товарів</h1>
+                <p class="search-description">Введіть назву товару або категорії для пошуку</p>
+            {% endif %}
+        </div>
+
+        <!-- Search Form -->
+        <div class="search-form-section">
+            <form action="{% url 'core:search' %}" method="get" class="main-search-form">
+                <div class="search-input-wrapper">
+                    <input 
+                        type="search" 
+                        name="q" 
+                        placeholder="Пошук товарів..." 
+                        class="search-input-main"
+                        value="{{ query|default:'' }}"
+                        aria-label="Пошук товарів"
+                        autocomplete="off"
+                        required
+                    >
+                    <button type="submit" class="search-submit-main" aria-label="Знайти">
+                        <svg class="search-icon-main" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {% if query %}
+            {% if products %}
+                <!-- Search Results -->
+                <section class="search-results" aria-label="Результати пошуку">
+                    <div class="products-grid" id="searchProductsGrid" role="main" aria-live="polite">
+                        {% for product in products %}
+                            {% include 'includes/product_card.html' with product=product %}
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Loading Spinner -->
+                    <div class="search-loading" id="searchLoading">
+                        <div class="spinner"></div>
+                        <p>Завантаження товарів...</p>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="search-pagination" id="searchPagination"></div>
+                </section>
+            {% else %}
+                <!-- No Results -->
+                <div class="no-results-section">
+                    <div class="no-results-content">
+                        <div class="no-results-icon">🔍</div>
+                        <h2 class="no-results-title">Товарів не знайдено</h2>
+                        <p class="no-results-text">
+                            За запитом <strong>"{{ query }}"</strong> нічого не знайдено. 
+                            Спробуйте змінити пошукові слова або скористайтеся каталогом.
+                        </p>
+                        
+                        <div class="no-results-actions">
+                            <a href="{% url 'core:home' %}" class="btn btn-primary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                На головну
+                            </a>
+                            <a href="/" class="btn btn-secondary">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                На головну
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

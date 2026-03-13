@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Оплата замовлення - {{ site_name }}{% endblock %}
+
+{% block content %}
+<section class="payment-section section-padding">
+    <div class="container">
+        <div class="payment-wrapper">
+            <h1>Оплата замовлення</h1>
+            <p>Сума до сплати: <strong>{{ order_data.final_total }} ₴</strong></p>
+            <p>Інтеграція з Monobank буде реалізована пізніше</p>
+            
+            <div class="payment-actions">
+                <form method="get" action="{% url 'orders:payment_callback' %}">
+                    <input type="hidden" name="status" value="success">
+                    <button type="submit" class="btn btn-primary">Симулювати успішну оплату</button>
+                </form>
+                
+                <form method="get" action="{% url 'orders:payment_callback' %}">
+                    <input type="hidden" name="status" value="failed">
+                    <button type="submit" class="btn btn-secondary">Симулювати неуспішну оплату</button>
+                </form>
+                
+                <a href="{% url 'orders:create' %}" class="btn btn-secondary">Повернутися до оформлення</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,417 @@
+/* Стилі для сторінки доставки та оплати */
+
+/* Delivery Methods Section */
+.delivery-methods-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* Anonymity Notice */
+.anonymity-notice {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 15px;
+}
+
+.anonymity-text {
+    display: inline-block;
+    font-size: 1.25em;
+    font-weight: 600;
+    color: var(--color-cta-primary);
+    margin: 0;
+    padding: 15px 30px;
+    background: rgba(74, 144, 217, 0.08);
+    border-radius: 50px;
+    border: 2px solid rgba(74, 144, 217, 0.2);
+    box-shadow: 0 4px 15px rgba(74, 144, 217, 0.15);
+    transition: all 0.3s ease;
+}
+
+.delivery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+    padding: 15px 0;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.delivery-card {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(74, 144, 217, 0.1);
+    transition: all 0.3s ease;
+    overflow: visible;
+    cursor: default;
+}
+
+.delivery-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(74, 144, 217, 0.15);
+    border-color: rgba(74, 144, 217, 0.3);
+}
+
+.delivery-image {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.delivery-image img {
+    max-width: 120px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.delivery-card:hover .delivery-image img {
+    transform: scale(1.1);
+}
+
+.delivery-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.delivery-description {
+    color: #666;
+    font-size: 0.95em;
+    text-align: center;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+
+.delivery-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.delivery-features li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.4;
+}
+
+.delivery-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #28a745;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* Free Shipping Info */
+.delivery-free-shipping {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.free-shipping-text {
+    font-size: 1.3em;
+    color: var(--color-cta-primary);
+    margin: 0;
+    font-weight: 600;
+}
+
+.free-shipping-text strong {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+/* Payment Methods Section */
+.payment-methods-section {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.payment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    padding: 15px 0;
+}
+
+.payment-card {
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(52, 58, 64, 0.1);
+    transition: all 0.3s ease;
+    overflow: visible;
+    cursor: default;
+}
+
+.payment-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(52, 58, 64, 0.15);
+    border-color: rgba(52, 58, 64, 0.3);
+}
+
+.payment-image {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.payment-image img {
+    max-width: 120px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.payment-card:hover .payment-image img {
+    transform: scale(1.1);
+}
+
+.payment-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.payment-description {
+    color: #666;
+    font-size: 0.95em;
+    text-align: center;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+
+.payment-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.payment-features li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.4;
+}
+
+.payment-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+
+/* Адаптивність */
+@media (max-width: 1024px) {
+    .anonymity-text {
+        font-size: 1.15em;
+        padding: 12px 25px;
+    }
+    
+    .delivery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .payment-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .anonymity-notice {
+        margin-bottom: 30px;
+    }
+    
+    .anonymity-text {
+        font-size: 1.05em;
+        padding: 12px 20px;
+    }
+    
+    .delivery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 30px;
+    }
+    
+    .delivery-free-shipping {
+        margin-top: 25px;
+        padding: 15px 15px;
+    }
+    
+    .free-shipping-text {
+        font-size: 1.15em;
+    }
+    
+    .free-shipping-text strong {
+        font-size: 1.2em;
+    }
+    
+    .payment-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 30px;
+    }
+    
+    .delivery-card,
+    .payment-card {
+        padding: 20px;
+        border-radius: 15px;
+    }
+    
+    .delivery-image img,
+    .payment-image img {
+        max-width: 100px;
+        height: auto;
+    }
+    
+    .delivery-title,
+    .payment-title {
+        font-size: 1.25em;
+    }
+    
+    .delivery-description,
+    .payment-description {
+        font-size: 0.95em;
+    }
+    
+    .delivery-features li,
+    .payment-features li {
+        padding-left: 28px;
+        padding-right: 10px;
+        font-size: 0.95em;
+    }
+    
+    .delivery-features li::before,
+    .payment-features li::before {
+        left: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .anonymity-notice {
+        margin-bottom: 25px;
+    }
+    
+    .anonymity-text {
+        font-size: 0.9em;
+        padding: 10px 15px;
+        line-height: 1.4;
+    }
+    
+    .delivery-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .delivery-card,
+    .payment-card {
+        padding: 18px;
+        border-radius: 15px;
+    }
+    
+    .delivery-image img,
+    .payment-image img {
+        max-width: 90px;
+        height: auto;
+    }
+    
+    .delivery-title,
+    .payment-title {
+        font-size: 1.2em;
+    }
+    
+    .delivery-description,
+    .payment-description {
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+    
+    .delivery-features li,
+    .payment-features li {
+        font-size: 0.9em;
+        padding: 6px 0;
+        padding-left: 26px;
+    }
+    
+    .delivery-features li::before,
+    .payment-features li::before {
+        left: 3px;
+        font-size: 1.1em;
+    }
+    
+    .delivery-free-shipping {
+        margin-top: 20px;
+        padding: 15px 12px;
+    }
+    
+    .free-shipping-text {
+        font-size: 1.05em;
+    }
+    
+    .free-shipping-text strong {
+        font-size: 1.15em;
+    }
+}
+
+/* Анімації */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.fade-in:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.fade-in:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.fade-in:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Спеціальні стилі для iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .delivery-card,
+    .payment-card {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .delivery-card:hover,
+    .payment-card:hover {
+        -webkit-transform: translateY(-10px) translateZ(0);
+        transform: translateY(-10px) translateZ(0);
+    }
+}

@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Кошик - {{ site_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="cart-section section-padding">
+    <div class="container">
+        
+        <h1 class="section-title">Кошик покупок</h1>
+        
+        {% if cart %}
+            <div class="cart-content">
+                <div class="cart-items">
+                    {% for item in cart %}
+                        <div class="cart-item" data-product-id="{{ item.product.id }}" data-price="{{ item.price }}">
+                            <button class="item-remove" 
+                                    data-product-id="{{ item.product.id }}"
+                                    data-product-name="{{ item.product.name }}"
+                                    aria-label="Видалити товар">
+                                ×
+                            </button>
+                            
+                            <a href="{{ item.product.get_absolute_url }}" class="item-image">
+                                {% if item.product.images.first %}
+                                    <img src="{{ item.product.images.first.get_image_url }}" alt="{{ item.product.name }}">
+                                {% else %}
+                                    <div class="product-placeholder">
+                                        <i class="icon-product">📦</i>
+                                    </div>
+                                {% endif %}
+                            </a>
+                            
+                            <div class="item-details">
+                                <h3 class="item-name">
+                                    <a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a>
+                                </h3>
+                                <div class="item-price-wrapper">
+                                    {% if item.is_sale %}
+                                        <span class="item-price-current">{{ item.price }} ₴</span>
+                                        <span class="item-price-old">{{ item.retail_price }} ₴</span>
+                                    {% else %}
+                                        <span class="item-price-current">{{ item.price }} ₴</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="item-bottom">
+                                <div class="item-quantity">
+                                    <label for="quantity-{{ item.product.id }}">Кількість:</label>
+                                    <div class="quantity-controls">
+                                        <button type="button" class="qty-btn qty-minus" data-product-id="{{ item.product.id }}">−</button>
+                                        <input type="number" 
+                                               id="quantity-{{ item.product.id }}"
+                                               class="cart-quantity" 
+                                               value="{{ item.quantity }}" 
+                                               min="1" 
+                                               max="{{ item.product.stock }}"
+                                               data-product-id="{{ item.product.id }}"
+                                               readonly>
+                                        <button type="button" class="qty-btn qty-plus" data-product-id="{{ item.product.id }}" data-max="{{ item.product.stock }}">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="item-total">
+                                    {% if item.is_sale %}
+                                        <div class="item-total-old">{{ item.total_retail_price }} ₴</div>
+                                        <div class="item-total-price">{{ item.total_price }} ₴</div>
+                                        <div class="item-discount">-{{ item.discount_amount }} ₴</div>
+                                    {% else %}
+                                        <div class="item-total-price">{{ item.total_price }} ₴</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="item-actions">
+                                <button class="btn btn-outline btn-sm remove-from-cart" 
+                                        data-product-id="{{ item.product.id }}"
+                                        data-product-name="{{ item.product.name }}">
+                                    Видалити
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Сума товарів:</span>
+                        <span class="cart-subtotal">{{ cart.get_total_retail_price }} ₴</span>
+                    </div>
+                    
+                    {% if cart.get_product_discount > 0 %}
+                    <div class="summary-row discount-row">
+                        <span>Знижка на товари:</span>
+                        <span class="cart-discount">-{{ cart.get_product_discount }} ₴</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if cart.promo_code %}
+                        <div class="summary-row promo-discount-row">
+                            <span>Знижка по промокоду:</span>
+                            <span class="promo-discount-amount">-{{ cart.get_promo_discount }} ₴</span>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="promo-code-section">
+                        {% if cart.promo_code %}
+                            <div class="promo-applied">
+                                <span class="promo-label">Промокод: <strong>{{ cart.promo_code }}</strong></span>
+                                <button type="button" class="btn-link remove-promo">Видалити</button>
+                            </div>
+                        {% else %}
+                            <div class="promo-input-wrapper">
+                                <input type="text" 
+                                       id="promoCodeInput" 
+                                       class="form-control" 
+                                       placeholder="Промокод"
+                                       maxlength="50">
+                                <button type="button" class="btn btn-secondary apply-promo">Застосувати</button>
+                            </div>
+                            <div class="promo-message"></div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="summary-row summary-total">
+                        <span>До сплати:</span>
+                        <span class="cart-grand-total">{{ cart.get_total_price }} ₴</span>
+                    </div>
+                    
+                    <div class="cart-actions">
+                        <a href="/" class="btn btn-outline btn-continue">Продовжити покупки</a>
+                        <a href="{% url 'orders:create' %}" class="btn btn-primary">Оформити замовлення</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-cart text-center">
+                <div class="empty-cart-icon">
+                    <i class="icon-cart">🛒</i>
+                </div>
+                <h2>Ваш кошик порожній</h2>
+                <p>Додайте товари до кошика, щоб продовжити покупки</p>
+                <a href="/" class="btn btn-primary">На головну</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/cart-detail.js' %}"></script>
+{% endblock %}

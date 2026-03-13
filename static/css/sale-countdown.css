@@ -1,0 +1,124 @@
+.product-badge--sale-name {
+    display: block;
+    background: var(--color-brand-accent);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.2;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    white-space: nowrap;
+}
+
+.product-badge--discount {
+    display: block;
+    background: var(--color-cta-primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    white-space: nowrap;
+}
+
+.sale-countdown {
+    display: block;
+    padding: 8px 12px;
+    background: rgba(255, 68, 68, 0.75);
+    color: white;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+}
+
+.countdown-ended {
+    background: rgba(153, 153, 153, 0.9);
+}
+
+.product-card__badges,
+.product-badges,
+.promo-badges {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    max-width: calc(100% - 50px);
+}
+
+.product-card__wishlist {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.product-card__wishlist:hover {
+    background: white;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.product-card__wishlist--active {
+    background: var(--color-brand-accent);
+    color: white;
+}
+
+.product-card__wishlist-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .product-badge--sale-name {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+    
+    .product-badge--discount {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+    
+    .sale-countdown {
+        font-size: 10px;
+        padding: 6px 10px;
+    }
+    
+    .product-card__badges,
+    .product-badges,
+    .promo-badges {
+        max-width: calc(100% - 30px);
+    }
+    
+    .product-card__wishlist {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .product-card__wishlist-icon {
+        font-size: 14px;
+    }
+}
+

@@ -1,0 +1,62 @@
+<div class="promo-card">
+    <div class="promo-image">
+        <a href="{{ product.get_absolute_url }}">
+            {% if product.main_images and product.main_images.0.image %}
+                <img src="{{ product.main_images.0.image.url }}" alt="{{ product.name }}" loading="lazy">
+            {% elif product.images.first %}
+                <img src="{{ product.images.first.get_image_url }}" alt="{{ product.name }}" loading="lazy">
+            {% else %}
+                <div class="product-placeholder">📦</div>
+            {% endif %}
+        </a>
+        
+        <button 
+            type="button"
+            class="product-card__wishlist" 
+            data-product-id="{{ product.id }}" 
+            aria-label="Додати в обране"
+            title="Додати в обране"
+        >
+            <span class="product-card__wishlist-icon">♡</span>
+        </button>
+        
+        <div class="promo-badges">
+            {% include 'includes/sale_countdown.html' with product=product %}
+            {% if product.is_top %}
+                <span class="badge badge-top">ТОП</span>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="promo-content">
+        <h3 class="promo-name">
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        </h3>
+        
+        <div class="promo-price">
+            {% if product.is_sale_active %}
+                <span class="price-new">{{ product.sale_price }} ₴</span>
+                <span class="price-old">{{ product.retail_price }} ₴</span>
+            {% else %}
+                <span class="price-new">{{ product.retail_price }} ₴</span>
+            {% endif %}
+        </div>
+        
+        <div class="promo-actions">
+            {% if product.is_in_stock %}
+                <button 
+                    type="button"
+                    class="promo-add-cart" 
+                    data-product-id="{{ product.id }}"
+                >
+                    До кошика
+                </button>
+            {% else %}
+                <button type="button" class="promo-add-cart promo-add-cart--disabled" disabled>
+                    Немає в наявності
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>
+

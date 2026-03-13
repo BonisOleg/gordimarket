@@ -1,0 +1,239 @@
+/* ============================================ */
+/*         ЄДИНА СИСТЕМА CSS-ЗМІННИХ          */
+/*       Generic E-commerce Design System     */
+/* ============================================ */
+/*
+  BRAND COLORS — змінюй тут для кожного нового магазину.
+  Принцип 60-30-10:
+    60% — фонові кольори (bg-primary, bg-secondary)
+    30% — брендові кольори (brand-primary, brand-light, brand-accent)
+    10% — CTA / акценти (cta-primary, cta-coral)
+*/
+
+:root {
+  /* ========== GORDI MARKET — ЧИСТИЙ МІНІМАЛІСТИЧНИЙ СТИЛЬ ========== */
+
+  /* 60% - ФОНОВІ КОЛЬОРИ */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f7f7f7;
+  --color-bg-tertiary: #fafafa;
+
+  /* 30% - БРЕНДОВІ КОЛЬОРИ */
+  --color-brand-primary: #1a1a1a;
+  --color-brand-light: #444444;
+  --color-brand-accent: #000000;
+  --color-brand-mint: #2ecc71;
+  --color-brand-purple: #7C6FBF;
+
+  /* 10% - АКЦЕНТНІ КОЛЬОРИ (CTA) */
+  --color-cta-primary: #1a1a1a;
+  --color-cta-secondary: #444444;
+
+  /* ТЕКСТОВІ КОЛЬОРИ */
+  --color-text-primary: #2C2C2C;
+  --color-text-secondary: #6B6B6B;
+  --color-text-muted: #999999;
+  --color-text-white: #FFFFFF;
+
+  /* СИСТЕМНІ КОЛЬОРИ */
+  --color-success: #60C8B3;
+  --color-warning: #888888;
+  --color-error: #555555;
+  --color-info: #7C6FBF;
+  --color-danger: #555555;
+
+  /* Легасі — neutralізовано рожевий */
+  --primary-pink: #666666;
+
+  /* БОРДЕРИ */
+  --color-border-light: #E0E0E0;
+  --color-border-medium: #BDBDBD;
+  --color-border-dark: #757575;
+
+  /* БЕЙДЖІ ТОВАРІВ */
+  --badge-top: #444444;
+  --badge-sale: #1a1a1a;
+  --badge-video: #4285F4;
+  --badge-new: #555555;
+
+  /* Gray Scale (залишаємо для компонентів) */
+  --color-gray-50: #FAFAFA;
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #EEEEEE;
+  --color-gray-300: #E0E0E0;
+  --color-gray-400: #BDBDBD;
+  --color-gray-500: #9E9E9E;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
+  --color-gray-900: #212121;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  
+  /* Legacy aliases (backward compat — перейменувати при наступному рефакторингу) */
+  --color-primary: var(--color-cta-primary);
+  --color-primary-light: var(--color-brand-light);
+  --color-primary-dark: var(--color-brand-accent);
+  --primary-brand: var(--color-brand-primary);
+  --primary-brand-light: var(--color-brand-light);
+  --primary-brand-dark: var(--color-brand-accent);
+  --accent-color: var(--color-brand-accent);
+  /* Old aliases kept for any code that references --color-cta-coral */
+  --color-cta-coral: var(--color-cta-secondary);
+  --neutral-dark: var(--color-text-primary);
+  --neutral-light: var(--color-bg-secondary);
+  --white: var(--color-bg-primary);
+  --success: var(--color-success);
+  --warning: var(--color-warning);
+  --danger: var(--color-error);
+  --info: var(--color-info);
+  --gray-light: var(--color-gray-100);
+  --gray-medium: var(--color-gray-500);
+  --gray-dark: var(--color-gray-700);
+  
+  /* ========== ТИПОГРАФІЯ ========== */
+  
+  /* Font Families */
+  --font-primary: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-special-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-subtitle: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Font Sizes */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  
+  /* ========== ВІДСТУПИ (SPACING) ========== */
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-xxl: 3rem;      /* 48px */
+  --spacing-xxxl: 4rem;     /* 64px */
+  
+  /* Aliases для сумісності */
+  --space-xs: var(--spacing-xs);
+  --space-sm: var(--spacing-sm);
+  --space-md: var(--spacing-md);
+  --space-lg: var(--spacing-lg);
+  --space-xl: var(--spacing-xl);
+  --space-xxl: var(--spacing-xxl);
+  --space-xxxl: var(--spacing-xxxl);
+  
+  /* ========== РАДІУСИ (BORDER RADIUS) ========== */
+  --border-radius-xs: 4px;
+  --border-radius-sm: 6px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-round: 50%;
+  
+  /* Aliases */
+  --radius-xs: var(--border-radius-xs);
+  --radius-sm: var(--border-radius-sm);
+  --radius-md: var(--border-radius-md);
+  --radius-lg: var(--border-radius-lg);
+  --radius-xl: var(--border-radius-xl);
+  --radius-round: var(--border-radius-round);
+  
+  /* ========== ТІНІ (SHADOWS) ========== */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  
+  /* ========== АНІМАЦІЇ (TRANSITIONS) ========== */
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 250ms ease-out;
+  --transition-slow: 350ms ease-out;
+  
+  /* Legacy */
+  --transition-medium: var(--transition-normal);
+  --transition-smooth: var(--transition-normal);
+  
+  /* ========== КОМПОНЕНТИ ========== */
+  
+  /* Product Cards (загальні стилі) */
+  --card-border-radius: var(--border-radius-lg);
+  --card-aspect-ratio: 1 / 1;
+  --card-padding: var(--spacing-sm);
+  --card-gap: var(--spacing-sm);
+  --card-bg: var(--color-white);
+  --card-border: var(--color-gray-200);
+  --card-shadow: var(--shadow-sm);
+  --card-shadow-hover: var(--shadow-lg);
+  
+  /* Badges */
+  --badge-padding: 4px 8px;
+  --badge-radius: 16px;
+  --badge-font-size: 10px;
+  --badge-offset: 8px;
+  
+  /* Wishlist Button */
+  --wishlist-size: 32px;
+  --wishlist-icon-size: 16px;
+  --wishlist-offset: 8px;
+  
+  /* Catalog */
+  --catalog-max-width: 1200px;
+  --catalog-padding: var(--spacing-lg);
+  --catalog-gap: 18px;
+  --product-card-max-width: 260px;
+  --product-card-border-radius: 12px;
+  
+  /* Filters */
+  --filters-height: 80px;
+  --filters-bg: var(--color-white);
+  --filters-border: var(--color-gray-200);
+  
+  /* ========== BREAKPOINTS ========== */
+  --bp-sm: 600px;
+  --bp-md: 768px;
+  --bp-lg: 992px;
+  --bp-xl: 1200px;
+  --bp-xxl: 1400px;
+}
+
+/* ========== MOBILE VARIABLES ========== */
+@media (max-width: 768px) {
+  :root {
+    --card-padding: 10px;
+    --card-gap: 6px;
+    --wishlist-size: 30px;
+    --wishlist-icon-size: 15px;
+    --badge-font-size: 9px;
+    --catalog-gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --card-padding: 8px;
+    --card-gap: 4px;
+    --wishlist-size: 28px;
+    --wishlist-icon-size: 14px;
+    --wishlist-offset: 6px;
+    --badge-font-size: 8px;
+    --badge-offset: 6px;
+  }
+}
+

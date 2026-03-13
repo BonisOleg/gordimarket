@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Доставка та оплата - {{ site_name }}{% endblock %}
+{% block description %}Доставка та оплата товарів в інтернет-магазині {{ site_name }}.{% endblock %}
+
+{% block content %}
+<!-- Delivery Methods -->
+<section class="delivery-methods-section section-padding">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">Доставка</h2>
+        </div>
+        
+        <div class="delivery-grid">
+            <div class="delivery-card card fade-in">
+                <div class="delivery-image">
+                    <img src="{% static 'images/nova_posta.png' %}" alt="Нова Пошта" loading="lazy">
+                </div>
+                <div class="delivery-content">
+                    <h3 class="delivery-title">Нова Пошта</h3>
+                    <p class="delivery-description">Доставка на відділення / Кур'єром на адресу</p>
+                    <p class="delivery-description"><strong>1-2 робочих дня</strong></p>
+                    <ul class="delivery-features">
+                        <li>Понад 7000 відділень по Україні</li>
+                        <li>Швидка доставка 1-2 дні</li>
+                        <li>Відстеження посилки онлайн</li>
+                        <li>Доставка до дому кур'єром</li>
+                        <li>Поштомати для зручного отримання</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="delivery-card card fade-in">
+                <div class="delivery-image">
+                    <img src="{% static 'images/ukr_posta.png' %}" alt="Укр Пошта" loading="lazy">
+                </div>
+                <div class="delivery-content">
+                    <h3 class="delivery-title">Укр Пошта</h3>
+                    <p class="delivery-description">Доставка на відділення</p>
+                    <ul class="delivery-features">
+                        <li>Найбільша мережа відділень</li>
+                        <li>Доступні ціни на доставку</li>
+                        <li>Доставка в сільську місцевість</li>
+                        <li>Надійна державна служба</li>
+                        <li>Відстеження посилки</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        {% if site_settings_obj and site_settings_obj.free_shipping_threshold and site_settings_obj.free_shipping_threshold > 0 %}
+        <div class="delivery-free-shipping">
+            <p class="free-shipping-text">Всі замовлення від <strong>{{ site_settings_obj.free_shipping_threshold|floatformat:0 }} ₴</strong> доставимо безкоштовно</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Payment Methods -->
+<section class="payment-methods-section section-padding bg-light">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">Оплата</h2>
+            <p class="section-subtitle">У нашому магазині ми пропонуємо різні способи оплати, щоб зробити ваші покупки зручніше:</p>
+        </div>
+        
+        <div class="payment-grid">
+            <div class="payment-card card fade-in">
+                <div class="payment-image">
+                    <img src="{% static 'images/online_pay.png' %}" alt="Онлайн оплата" loading="lazy">
+                </div>
+                <div class="payment-content">
+                    <h3 class="payment-title">Онлайн оплата</h3>
+                    <p class="payment-description">платіжні картки, Apple Pay/Google Pay та багато інших</p>
+                    <ul class="payment-features">
+                        <li>Visa, Mastercard</li>
+                        <li>Apple Pay</li>
+                        <li>Google Pay</li>
+                        <li>Миттєве підтвердження платежу</li>
+                        <li>Безпечна оплата з SSL-шифруванням</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="payment-card card fade-in">
+                <div class="payment-image">
+                    <img src="{% static 'images/za_recvizitamy.png' %}" alt="Безготівкова оплата" loading="lazy">
+                </div>
+                <div class="payment-content">
+                    <h3 class="payment-title">Безготівкова оплата</h3>
+                    <p class="payment-description">оплата на розрахунковий рахунок у банку</p>
+                    <ul class="payment-features">
+                        <li>Банківський переказ</li>
+                        <li>Оплата через інтернет-банкінг</li>
+                        <li>Для юридичних осіб</li>
+                        <li>Можливість оплати за реквізитами</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="payment-card card fade-in">
+                <div class="payment-image">
+                    <img src="{% static 'images/oplata_pry_dostavtsi.png' %}" alt="Оплата при отриманні" loading="lazy">
+                </div>
+                <div class="payment-content">
+                    <h3 class="payment-title">Оплата при отриманні</h3>
+                    <p class="payment-description">сплачуйте за товар при фактичному отриманні</p>
+                    <ul class="payment-features">
+                        <li>Оплата готівкою у відділенні</li>
+                        <li>Оплата карткою у відділенні</li>
+                        <li>Додаткова комісія перевізника</li>
+                        <li>Зручно та безпечно</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Список бажань | {{ site_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="wishlist-page">
+    <div class="container">
+        <!-- Page Header -->
+        <div class="wishlist-header">
+            <h1 class="page-title">
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.84 4.61C20.3292 4.099 19.7228 3.69364 19.0554 3.41708C18.3879 3.14052 17.6725 2.99817 16.95 2.99817C16.2275 2.99817 15.5121 3.14052 14.8446 3.41708C14.1772 3.69364 13.5708 4.099 13.06 4.61L12 5.67L10.94 4.61C9.9083 3.57831 8.50903 2.99871 7.05 2.99871C5.59096 2.99871 4.19169 3.57831 3.16 4.61C2.1283 5.64169 1.54871 7.04097 1.54871 8.5C1.54871 9.95903 2.1283 11.3583 3.16 12.39L4.22 13.45L12 21.23L19.78 13.45L20.84 12.39C21.351 11.8792 21.7564 11.2728 22.0329 10.6054C22.3095 9.93789 22.4518 9.22248 22.4518 8.5C22.4518 7.77752 22.3095 7.06211 22.0329 6.39464C21.7564 5.72718 21.351 5.12084 20.84 4.61Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Список бажань
+            </h1>
+            {% if products %}
+            <p class="wishlist-count">{{ products|length }} {{ products|length|pluralize:"товар,товари,товарів" }}</p>
+            {% endif %}
+        </div>
+
+        {% if products %}
+        <!-- Wishlist Items Grid -->
+        <div class="wishlist-content">
+            <div class="products-grid products-grid--cols-4">
+                {% for product in products %}
+                <article class="product-card{% if not product.is_in_stock %} product-card--out-of-stock{% endif %}" data-product-id="{{ product.id }}">
+                    <!-- Медіаблок -->
+                    <div class="product-card__media">
+                        {% if product.main_image %}
+                            <img 
+                                src="{{ product.main_image.get_image_url }}" 
+                                alt="{{ product.name }}" 
+                                class="product-card__image"
+                                loading="lazy"
+                                width="300"
+                                height="300"
+                            >
+                        {% else %}
+                            <div class="product-card__placeholder" aria-label="Зображення товару відсутнє">
+                                📦
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Кнопка видалення з обраного -->
+                        <button 
+                            type="button"
+                            class="product-card__wishlist product-card__wishlist--active" 
+                            data-product-id="{{ product.id }}" 
+                            aria-label="Видалити з обраного"
+                            title="Видалити з обраного"
+                        >
+                            <span class="product-card__wishlist-icon" aria-hidden="true">♥</span>
+                        </button>
+                        
+                        <!-- Бейджі -->
+                        <div class="product-card__badges">
+                            {% include 'includes/sale_countdown.html' with product=product %}
+                            {% if product.is_new %}
+                                <span class="product-badge product-badge--new" aria-label="Новинка">
+                                    NEW
+                                </span>
+                            {% endif %}
+                            {% if product.is_top %}
+                                <span class="product-badge product-badge--hit" aria-label="Хіт продажу">
+                                    ХІТ
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Контент картки -->
+                    <div class="product-card__content">
+                        <h3 class="product-card__name" title="{{ product.name }}">
+                            <a href="{{ product.get_absolute_url }}" class="product-card__link">
+                                {{ product.name }}
+                            </a>
+                        </h3>
+                        
+                        <div class="product-card__price">
+                            {% if product.is_sale_active %}
+                                <span class="product-card__price-current" aria-label="Акційна ціна">
+                                    {{ product.sale_price }} ₴
+                                </span>
+                                <span class="product-card__price-old" aria-label="Стара ціна">
+                                    {{ product.retail_price }} ₴
+                                </span>
+                            {% else %}
+                                <span class="product-card__price-current" aria-label="Ціна">
+                                    {{ product.retail_price }} ₴
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Дії картки -->
+                    <div class="product-card__actions">
+                        {% if product.is_in_stock %}
+                            <button 
+                                type="button"
+                                class="product-card__add-cart" 
+                                data-product-id="{{ product.id }}"
+                                aria-label="Додати {{ product.name }} до кошика"
+                            >
+                                До кошика
+                            </button>
+                        {% else %}
+                            <button 
+                                type="button"
+                                class="product-card__add-cart product-card__add-cart--disabled" 
+                                disabled
+                                aria-label="Товар тимчасово відсутній"
+                            >
+                                Немає в наявності
+                            </button>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Оверлей для товарів не в наявності -->
+                    {% if not product.is_in_stock %}
+                        <div class="product-card__out-of-stock-label" aria-hidden="true">
+                            Немає в наявності
+                        </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+
+            <!-- Actions -->
+            <div class="wishlist-actions">
+                <a href="/" class="btn btn-secondary btn-lg">
+                    Продовжити покупки
+                </a>
+                <a href="{% url 'wishlist:clear' %}" class="btn btn-outline btn-lg wishlist-clear-btn" data-confirm="Ви впевнені, що хочете очистити список бажань?">
+                    Очистити список
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <!-- Empty Wishlist -->
+        <div class="wishlist-empty">
+            <div class="empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.84 4.61C20.3292 4.099 19.7228 3.69364 19.0554 3.41708C18.3879 3.14052 17.6725 2.99817 16.95 2.99817C16.2275 2.99817 15.5121 3.14052 14.8446 3.41708C14.1772 3.69364 13.5708 4.099 13.06 4.61L12 5.67L10.94 4.61C9.9083 3.57831 8.50903 2.99871 7.05 2.99871C5.59096 2.99871 4.19169 3.57831 3.16 4.61C2.1283 5.64169 1.54871 7.04097 1.54871 8.5C1.54871 9.95903 2.1283 11.3583 3.16 12.39L4.22 13.45L12 21.23L19.78 13.45L20.84 12.39C21.351 11.8792 21.7564 11.2728 22.0329 10.6054C22.3095 9.93789 22.4518 9.22248 22.4518 8.5C22.4518 7.77752 22.3095 7.06211 22.0329 6.39464C21.7564 5.72718 21.351 5.12084 20.84 4.61Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h2 class="empty-title">Ваш список бажань порожній</h2>
+            <p class="empty-text">Додайте товари, які вам сподобались, щоб не втратити їх</p>
+            <a href="/" class="btn btn-primary btn-lg">
+                На головну
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/wishlist.js' %}"></script>
+{% endblock %}

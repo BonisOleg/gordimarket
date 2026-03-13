@@ -1,0 +1,479 @@
+/* ============================================ */
+/*           ЗАГАЛЬНІ СТИЛІ КАРТОК ТОВАРІВ    */
+/*     (Використовуються на всіх сторінках)   */
+/* ============================================ */
+
+/* CSS-змінні для карток */
+:root {
+  /* Розміри карток */
+  --card-max-width: 260px;
+  --card-border-radius: 12px;
+  --card-aspect-ratio: 1 / 1;
+  --card-padding: 12px;
+  --card-gap: 8px;
+  
+  /* Бейджі */
+  --badge-padding: 4px 8px;
+  --badge-radius: 16px;
+  --badge-font-size: 10px;
+  --badge-offset: 8px;
+  
+  /* Кнопка обраного */
+  --wishlist-size: 32px;
+  --wishlist-icon-size: 16px;
+  --wishlist-offset: 8px;
+  
+  /* Кольори карток */
+  --card-bg: var(--color-white);
+  --card-border: var(--color-gray-200);
+  --card-shadow: var(--shadow-sm);
+  --card-shadow-hover: var(--shadow-lg);
+}
+
+/* ============================================ */
+/*              БАЗОВА КАРТКА ТОВАРУ           */
+/* ============================================ */
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-border-radius);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  height: 100%;
+  width: 100%;
+  position: relative;
+  box-shadow: var(--card-shadow);
+}
+
+.product-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+/* ============================================ */
+/*              МЕДІАБЛОК КАРТКИ               */
+/* ============================================ */
+
+.product-card__media,
+.product-image {
+  position: relative;
+  aspect-ratio: var(--card-aspect-ratio);
+  overflow: hidden;
+  background: var(--color-gray-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-card__image,
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform var(--transition-normal);
+}
+
+.product-card:hover .product-card__image,
+.product-card:hover .product-image img {
+  transform: scale(1.03);
+}
+
+.product-card__placeholder,
+.product-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: var(--font-size-3xl);
+  color: var(--color-gray-400);
+  background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-gray-100) 100%);
+}
+
+/* ============================================ */
+/*              КНОПКА ОБРАНОГО                */
+/* ============================================ */
+
+.product-card__wishlist,
+.wishlist-btn,
+.wishlist-icon {
+  position: absolute;
+  top: var(--wishlist-offset);
+  right: var(--wishlist-offset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--wishlist-size);
+  height: var(--wishlist-size);
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: var(--radius-round);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.product-card__wishlist:hover,
+.wishlist-btn:hover,
+.wishlist-icon:hover {
+  background: var(--color-white);
+  box-shadow: var(--shadow-md);
+  transform: scale(1.1);
+}
+
+.product-card__wishlist--active,
+.wishlist-btn.active,
+.wishlist-icon.active {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.product-card__wishlist-icon,
+.heart-icon {
+  font-size: var(--wishlist-icon-size);
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.product-card__wishlist:hover .product-card__wishlist-icon,
+.wishlist-btn:hover .heart-icon,
+.wishlist-icon:hover .heart-icon {
+  transform: scale(1.1);
+}
+
+/* ============================================ */
+/*              БЕЙДЖІ ТОВАРУ                  */
+/* ============================================ */
+
+.product-card__badges,
+.product-badges,
+.product-stickers {
+  position: absolute;
+  top: var(--badge-offset);
+  left: var(--badge-offset);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  z-index: 15;
+  transform: translateX(-2px) translateY(-2px);
+}
+
+.product-badge,
+.badge,
+.product-sticker {
+  padding: var(--badge-padding);
+  border-radius: var(--badge-radius);
+  font-size: var(--badge-font-size);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--color-white);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.product-badge--sale,
+.badge-sale,
+.sale-badge {
+  background: var(--badge-sale);
+  color: var(--color-white);
+}
+
+.product-badge--new,
+.badge-new {
+  background: var(--badge-new);
+  color: var(--color-white);
+}
+
+.product-badge--top,
+.badge-top,
+.featured-badge {
+  background: var(--badge-top);
+  color: var(--color-text-primary);
+}
+
+.product-badge--hit,
+.badge-hit {
+  background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+  color: var(--color-white);
+}
+
+/* ============================================ */
+/*              КОНТЕНТ КАРТКИ                 */
+/* ============================================ */
+
+.product-card__content,
+.product-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--card-padding);
+  gap: var(--card-gap);
+  min-height: 0;
+}
+
+.product-card__name,
+.product-name,
+.product-content h3 {
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-900);
+  line-height: 1.3;
+  margin: 0 0 var(--card-gap) 0;
+  word-spacing: 0.1em;
+  letter-spacing: 0.01em;
+  
+  /* Обмеження до 2 рядків */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 36px;
+}
+
+.product-card__link,
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+.product-card__link:hover,
+.product-link:hover {
+  color: var(--color-primary);
+}
+
+/* ============================================ */
+/*              ЦІНА ТОВАРУ                    */
+/* ============================================ */
+
+.product-card__price,
+.product-price {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: auto;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+  min-height: 24px;
+}
+
+.product-card__price-current,
+.price-current {
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.product-card__price-old,
+.price-old {
+  font-size: 13px;
+  color: var(--color-gray-500);
+  text-decoration: line-through;
+  line-height: 1;
+}
+
+.product-card__price-save {
+  padding: 2px 6px;
+  background: var(--color-success);
+  color: var(--color-white);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.price-wholesale {
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-secondary);
+}
+
+.price-type {
+  font-size: 10px;
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+}
+
+/* ============================================ */
+/*              ДІЇ З ТОВАРОМ                  */
+/* ============================================ */
+
+.product-card__actions,
+.product-actions {
+  margin-top: auto;
+  padding: 0 var(--card-padding) var(--card-padding);
+}
+
+.product-card__add-cart,
+.btn-add-cart {
+  width: 100%;
+  padding: 10px var(--space-sm);
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-white);
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: auto;
+}
+
+.product-card__add-cart:hover,
+.btn-add-cart:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 144, 217, 0.3);
+}
+
+.product-card__add-cart:active,
+.btn-add-cart:active {
+  transform: translateY(0);
+}
+
+.product-card__add-cart--added,
+.btn-add-cart.added {
+  background: var(--color-success);
+  pointer-events: none;
+}
+
+.product-card__add-cart--disabled,
+.btn-add-cart:disabled {
+  background: var(--color-gray-400);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.product-card__add-cart--loading,
+.btn-add-cart.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ============================================ */
+/*              АДАПТИВНІСТЬ                   */
+/* ============================================ */
+
+/* Планшети */
+@media (max-width: 768px) {
+  :root {
+    --card-max-width: 220px;
+    --card-padding: 10px;
+    --card-gap: 6px;
+    --wishlist-size: 30px;
+    --wishlist-icon-size: 15px;
+    --badge-font-size: 9px;
+  }
+  
+  .product-card__name,
+  .product-name,
+  .product-content h3 {
+    font-size: 13px;
+    min-height: 34px;
+  }
+  
+  .product-card__price-current,
+  .price-current {
+    font-size: 15px;
+  }
+  
+  .product-card__add-cart,
+  .btn-add-cart {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+/* Мобільні */
+@media (max-width: 480px) {
+  :root {
+    --card-padding: 8px;
+    --card-gap: 4px;
+    --wishlist-size: 28px;
+    --wishlist-icon-size: 14px;
+    --wishlist-offset: 6px;
+    --badge-font-size: 8px;
+    --badge-offset: 6px;
+  }
+  
+  .product-card__name,
+  .product-name,
+  .product-content h3 {
+    font-size: 12px;
+    min-height: 30px;
+  }
+  
+  .product-card__price-current,
+  .price-current {
+    font-size: 14px;
+  }
+  
+  .product-card__price-old,
+  .price-old {
+    font-size: 11px;
+  }
+  
+  .product-card__add-cart,
+  .btn-add-cart {
+    padding: 6px;
+    font-size: 11px;
+  }
+  
+  .product-badge,
+  .badge,
+  .product-sticker {
+    padding: 2px 6px;
+    font-size: var(--badge-font-size);
+  }
+}
+
+/* ============================================ */
+/*              УТИЛІТНІ КЛАСИ                 */
+/* ============================================ */
+
+.card-compact {
+  --card-max-width: 200px;
+  --card-padding: 8px;
+}
+
+.card-large {
+  --card-max-width: 300px;
+  --card-padding: 16px;
+}
+
+.card-rounded {
+  --card-border-radius: 16px;
+}
+
+.card-square {
+  --card-aspect-ratio: 1 / 1;
+}
+
+.card-portrait {
+  --card-aspect-ratio: 3 / 4;
+}
+
+.no-hover .product-card:hover {
+  transform: none;
+  box-shadow: var(--card-shadow);
+}
+
+.loading-skeleton .product-card {
+  background: var(--color-gray-100);
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}

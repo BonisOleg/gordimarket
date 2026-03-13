@@ -1,0 +1,60 @@
+.hidden {
+    display: none;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: var(--color-cta-primary);
+    color: white;
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.badge.hidden {
+    display: none;
+}
+
+.wishlist-link,
+.cart-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wishlist-link .badge,
+.cart-link .badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+}
+
+.nav-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: var(--color-cta-primary);
+    color: white;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.nav-badge-hidden {
+    display: none;
+}
+

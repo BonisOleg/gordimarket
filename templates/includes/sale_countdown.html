@@ -1,0 +1,10 @@
+{% load sale_tags %}
+{% if product.is_sale_active %}
+    {% if product.sale_end_date %}
+        {% get_sale_end_timestamp product as end_timestamp %}
+        {% if end_timestamp %}
+            <div class="sale-countdown" data-countdown="{{ end_timestamp }}">Завантаження...</div>
+        {% endif %}
+    {% endif %}
+{% endif %}
+

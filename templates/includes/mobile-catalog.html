@@ -1,0 +1,71 @@
+{% load static %}
+
+<div class="mobile-catalog-header">
+    <h2 class="mobile-catalog-title">Каталог товарів</h2>
+    <button class="mobile-catalog-close" id="mobile-catalog-close" aria-label="Закрити каталог">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+    </button>
+</div>
+
+<div class="mobile-catalog-content">
+    {% if main_categories %}
+    <ul class="mobile-categories-list">
+        {% for category in main_categories %}
+        {% if category.is_active and category.slug %}
+        <li class="mobile-category-item{% if category.children.all %} has-children{% endif %}">
+            {% if category.children.all %}
+            <button type="button" class="mobile-category-toggle" data-category-id="{{ category.id }}">
+                {% if category.icon %}<span class="cat-icon">{{ category.icon }}</span>{% endif %}
+                <span class="category-name">{{ category.name }}</span>
+                <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <polyline points="9 18 15 12 9 6"/>
+                </svg>
+            </button>
+            <ul class="mobile-subcategories-list">
+                {% for child in category.children.all %}
+                {% if child.is_active and child.slug %}
+                <li class="mobile-subcategory-item">
+                    <a href="{{ child.get_absolute_url }}" class="mobile-subcategory-link">{{ child.name }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% else %}
+            <a href="{{ category.get_absolute_url }}" class="mobile-category-link">
+                {% if category.icon %}<span class="cat-icon">{{ category.icon }}</span>{% endif %}
+                <span class="category-name">{{ category.name }}</span>
+            </a>
+            {% endif %}
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        <!-- Акції -->
+        <li class="mobile-category-item">
+            <a href="{% url 'products:sale' %}" class="mobile-category-link">
+                <span class="cat-icon">🏷️</span>
+                <span class="category-name">Акції</span>
+            </a>
+        </li>
+
+        <!-- Інформація -->
+        <li class="mobile-category-item has-children info-menu">
+            <button type="button" class="mobile-category-toggle" data-category-id="info">
+                <span class="cat-icon">ℹ️</span>
+                <span class="category-name">Інформація</span>
+                <svg class="category-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <polyline points="9 18 15 12 9 6"/>
+                </svg>
+            </button>
+            <ul class="mobile-subcategories-list">
+                <li class="mobile-subcategory-item"><a href="{% url 'core:about' %}" class="mobile-subcategory-link">Про нас</a></li>
+                <li class="mobile-subcategory-item"><a href="{% url 'core:delivery' %}" class="mobile-subcategory-link">Доставка та оплата</a></li>
+                <li class="mobile-subcategory-item"><a href="{% url 'core:returns' %}" class="mobile-subcategory-link">Повернення та обмін</a></li>
+                <li class="mobile-subcategory-item"><a href="{% url 'core:contacts' %}" class="mobile-subcategory-link">Контакти</a></li>
+            </ul>
+        </li>
+    </ul>
+    {% endif %}
+</div>
